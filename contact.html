@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Sorsone Silicon Ice Roller</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h2>Sorsone</h2>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="index.html#products">Products</a></li>
+                <li><a href="index.html#gallery">Gallery</a></li>
+                <li><a href="index.html#benefits">Benefits</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div id="alertContainer"></div>
+            <div class="contact-wrapper">
+                <div class="contact-content">
+                    <h2>Get in Touch</h2>
+                    <p class="contact-subtitle">Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+                    <div class="special-offer">
+                        <h3>🔥 Special Offer!</h3>
+                        <div class="price-display">
+                            <span>₹199</span>
+                            <span class="old-price">₹499</span>
+                        </div>
+                        <p style="margin-top: 0.5rem;">Limited Time Deal - Save ₹300!</p>
+                    </div>
+                    <div class="contact-features">
+                        <div class="contact-feature">
+                            <span class="feature-check">✓</span>
+                            <p>Email: info@sorsone.com</p>
+                        </div>
+                        <div class="contact-feature">
+                            <span class="feature-check">✓</span>
+                            <p>Phone: +1 (234) 567-890</p>
+                        </div>
+                        <div class="contact-feature">
+                            <span class="feature-check">✓</span>
+                            <p>Business Hours: Mon-Sat, 9AM-6PM</p>
+                        </div>
+                        <div class="contact-feature">
+                            <span class="feature-check">✓</span>
+                            <p>24/7 Online Support</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form-wrapper">
+                    <form id="contactForm" class="contact-form">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder="Your Name *" required>
+                            <span class="form-error">Please enter your name</span>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="Email Address *" required>
+                            <span class="form-error">Please enter a valid email</span>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="phone" name="phone" placeholder="Phone Number (Optional)">
+                        </div>
+                        <div class="form-group">
+                            <select id="subject" name="subject" required>
+                                <option value="">Select Subject *</option>
+                                <option value="Product Inquiry">Product Inquiry</option>
+                                <option value="Order Status">Order Status</option>
+                                <option value="Technical Support">Technical Support</option>
+                                <option value="Feedback">Feedback</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <span class="form-error">Please select a subject</span>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" placeholder="Your Message *" rows="5" required></textarea>
+                            <span class="form-error">Please enter your message</span>
+                        </div>
+                        <button type="submit" class="btn btn-submit" id="submitBtn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>Sorsone</h3>
+                    <p>Premium Silicon Ice Roller for healthy lifestyle</p>
+                    <p style="margin-top: 1rem; opacity: 0.7;">Transform your skincare routine with the power of silicon ice therapy. Special Offer: ₹199 (Save ₹300)</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="buynow.html">Order Now</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Policies</h4>
+                        <ul>
+                            <li><a href="privacy.html">Privacy Policy</a></li>
+                            <li><a href="terms.html">Terms & Conditions</a></li>
+                            <li><a href="refund.html">Refund Policy</a></li>
+                            <li><a href="disclaimer.html">Disclaimer</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Follow Us</h4>
+                        <div class="social-links">
+                            <a href="#" class="social-icon" title="Instagram">📷</a>
+                            <a href="#" class="social-icon" title="Facebook">📱</a>
+                            <a href="#" class="social-icon" title="Twitter">🐦</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Sorsone.com - Premium Silicon Ice Roller. All rights reserved. | Designed with ❤️ for your skincare</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        // ==================== CONTACT FORM LOGIC ====================
+        
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Clear previous errors
+            document.querySelectorAll('.form-group').forEach(group => {
+                group.classList.remove('error');
+            });
+            
+            let isValid = true;
+            
+            // Validate name
+            const name = document.getElementById('name');
+            if (name.value.trim() === '') {
+                name.closest('.form-group').classList.add('error');
+                isValid = false;
+            }
+            
+            // Validate email
+            const email = document.getElementById('email');
+            if (!validateEmail(email.value)) {
+                email.closest('.form-group').classList.add('error');
+                isValid = false;
+            }
+            
+            // Validate subject
+            const subject = document.getElementById('subject');
+            if (subject.value === '') {
+                subject.closest('.form-group').classList.add('error');
+                isValid = false;
+            }
+            
+            // Validate message
+            const message = document.getElementById('message');
+            if (message.value.trim() === '') {
+                message.closest('.form-group').classList.add('error');
+                isValid = false;
+            }
+            
+            if (!isValid) {
+                showAlert('error', 'Please fill in all required fields correctly');
+                return;
+            }
+            
+            // Prepare contact data
+            const contactData = {
+                name: name.value.trim(),
+                email: email.value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                subject: subject.value,
+                message: message.value.trim(),
+                submittedAt: new Date().toISOString()
+            };
+            
+            // Disable submit button
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending Message...';
+            
+            try {
+                // Send to backend
+                const response = await sendToBackend('createContact', contactData);
+                
+                if (response.status === 'success') {
+                    showAlert('success', 'Thank you for contacting us! We\'ll get back to you soon.');
+                    
+                    // Reset form after 1 second
+                    setTimeout(() => {
+                        document.getElementById('contactForm').reset();
+                    }, 1000);
+                } else {
+                    showAlert('error', response.message || 'Failed to send message. Please try again.');
+                }
+            } catch (error) {
+                console.error('Contact form error:', error);
+                showAlert('error', 'Failed to connect to server. Please try again later or contact us directly at info@sorsone.com');
+            } finally {
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Message';
+            }
+        });
+    </script>
+</body>
+</html>

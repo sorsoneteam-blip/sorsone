@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Now - Sorsone Silicon Ice Roller</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Razorpay SDK -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h2>Sorsone</h2>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="index.html#products">Products</a></li>
+                <li><a href="index.html#gallery">Gallery</a></li>
+                <li><a href="index.html#benefits">Benefits</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="buynow-hero">
+        <div class="container">
+            <h1>Complete Your Order</h1>
+            <p>Fill in your details to get your premium Silicon Ice Roller delivered</p>
+        </div>
+    </section>
+
+    <!-- Order Form Section -->
+    <section class="section section-light">
+        <div class="order-container">
+            <div id="alertContainer"></div>
+            
+            <div class="order-grid">
+                <!-- Order Form -->
+                <div class="order-form-card">
+                    <h2 style="margin-bottom: 1.5rem; color: var(--primary-green);">Delivery Information</h2>
+                    <form id="orderForm" class="contact-form">
+                        <!-- Personal Details -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" id="customerName" name="customerName" placeholder="Full Name *" required>
+                                <span class="form-error">Please enter your full name</span>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" id="phone" name="phone" placeholder="Phone Number (10 digits) *" required maxlength="10">
+                                <span class="form-error">Please enter a valid 10-digit phone number</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="Email Address *" required>
+                            <span class="form-error">Please enter a valid email address</span>
+                        </div>
+
+                        <!-- Address Details -->
+                        <h3 style="margin: 1.5rem 0 1rem; color: var(--text-dark);">Delivery Address</h3>
+                        
+                        <div class="form-group">
+                            <textarea id="street" name="street" placeholder="House No., Building Name, Street *" rows="2" required></textarea>
+                            <span class="form-error">Please enter your street address</span>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" id="city" name="city" placeholder="City *" required>
+                                <span class="form-error">Please enter your city</span>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="state" name="state" placeholder="State *" required>
+                                <span class="form-error">Please enter your state</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" id="pincode" name="pincode" placeholder="Pincode (6 digits) *" required maxlength="6">
+                            <span class="form-error">Please enter a valid 6-digit pincode</span>
+                        </div>
+
+                        <!-- Product Selection -->
+                        <h3 style="margin: 1.5rem 0 1rem; color: var(--text-dark);">Choose Your Product</h3>
+                        
+                        <div class="product-selector">
+                            <label class="color-option">
+                                <input type="radio" name="colorVariant" value="blue" id="color-blue">
+                                <div class="color-content">
+                                    <img src="images/Blue_varient.png" alt="Blue Ice Roller" class="color-img">
+                                    <div class="color-name">Cool Breeze (Blue)</div>
+                                </div>
+                            </label>
+                            
+                            <label class="color-option">
+                                <input type="radio" name="colorVariant" value="green" id="color-green">
+                                <div class="color-content">
+                                    <img src="images/green_varient.png" alt="Green Ice Roller" class="color-img">
+                                    <div class="color-name">Fresh Mint (Green)</div>
+                                </div>
+                            </label>
+                            
+                            <label class="color-option">
+                                <input type="radio" name="colorVariant" value="pink" id="color-pink">
+                                <div class="color-content">
+                                    <img src="images/pink_varient.jpeg" alt="Pink Ice Roller" class="color-img">
+                                    <div class="color-name">Berry Bliss (Pink)</div>
+                                </div>
+                            </label>
+                            
+                            <label class="color-option">
+                                <input type="radio" name="colorVariant" value="purple" id="color-purple">
+                                <div class="color-content">
+                                    <img src="images/purple_varient.jpeg" alt="Purple Ice Roller" class="color-img">
+                                    <div class="color-name">Lavender Dream (Purple)</div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="form-group" style="margin-top: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Quantity</label>
+                            <div class="quantity-selector">
+                                <button type="button" class="qty-btn" id="decreaseQty">-</button>
+                                <input type="number" id="quantity" name="quantity" value="1" min="1" max="10" class="qty-input" readonly>
+                                <button type="button" class="qty-btn" id="increaseQty">+</button>
+                            </div>
+                        </div>
+
+                        <!-- Payment Method Selection -->
+                        <h3 style="margin: 1.5rem 0 1rem; color: var(--text-dark);">Payment Method</h3>
+                        
+                        <div class="payment-methods">
+                            <label class="payment-option">
+                                <input type="radio" name="paymentMethod" value="cod" id="payment-cod" checked>
+                                <div class="payment-content">
+                                    <div class="payment-icon">💵</div>
+                                    <div>
+                                        <div class="payment-name">Cash on Delivery</div>
+                                        <div class="payment-desc">Pay when you receive</div>
+                                    </div>
+                                </div>
+                            </label>
+                            
+                            <label class="payment-option">
+                                <input type="radio" name="paymentMethod" value="razorpay" id="payment-razorpay">
+                                <div class="payment-content">
+                                    <div class="payment-icon">💳</div>
+                                    <div>
+                                        <div class="payment-name">Online Payment</div>
+                                        <div class="payment-desc">UPI, Cards, Net Banking</div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-submit" id="submitBtn">
+                            <span id="btnText">Place Order</span> - ₹<span id="buttonTotal">199</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="order-summary-card">
+                    <h2 style="margin-bottom: 1.5rem; color: var(--primary-green);">Order Summary</h2>
+                    
+                    <div class="summary-row">
+                        <span class="summary-label">Product</span>
+                        <span class="summary-value" id="summaryProduct">Silicon Ice Roller</span>
+                    </div>
+                    
+                    <div class="summary-row">
+                        <span class="summary-label">Color</span>
+                        <span class="summary-value" id="summaryColor">Not Selected</span>
+                    </div>
+                    
+                    <div class="summary-row">
+                        <span class="summary-label">Price per item</span>
+                        <span class="summary-value">₹199</span>
+                    </div>
+                    
+                    <div class="summary-row">
+                        <span class="summary-label">Quantity</span>
+                        <span class="summary-value" id="summaryQty">1</span>
+                    </div>
+                    
+                    <div class="summary-row">
+                        <span class="summary-label">Subtotal</span>
+                        <span class="summary-value" id="summarySubtotal">₹199</span>
+                    </div>
+                    
+                    <div class="summary-row">
+                        <span class="summary-label">Shipping</span>
+                        <span class="summary-value" style="color: var(--primary-green);">FREE</span>
+                    </div>
+                    
+                    <div class="summary-row">
+                        <span class="summary-label">Payment Method</span>
+                        <span class="summary-value" id="summaryPayment">Cash on Delivery</span>
+                    </div>
+                    
+                    <div class="summary-row total-row">
+                        <span class="summary-label">Total Amount</span>
+                        <span class="summary-value" id="summaryTotal">₹199</span>
+                    </div>
+
+                    <div style="margin-top: 1.5rem; padding: 1rem; background: var(--light-bg); border-radius: 15px;">
+                        <p style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 0.5rem;">💚 You're saving ₹<span id="savingsAmount">300</span> on this order!</p>
+                        <p style="font-size: 0.85rem; color: var(--text-light);">✓ Free Shipping<br>✓ Secure Checkout<br>✓ 100% Safe Payment</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>Sorsone</h3>
+                    <p>Premium Silicon Ice Roller for healthy lifestyle</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Policies</h4>
+                        <ul>
+                            <li><a href="privacy.html">Privacy Policy</a></li>
+                            <li><a href="terms.html">Terms & Conditions</a></li>
+                            <li><a href="refund.html">Refund Policy</a></li>
+                            <li><a href="disclaimer.html">Disclaimer</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Follow Us</h4>
+                        <div class="social-links">
+                            <a href="#" class="social-icon">📷</a>
+                            <a href="#" class="social-icon">📱</a>
+                            <a href="#" class="social-icon">🐦</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Sorsone.com - All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        // ==================== RAZORPAY CONFIGURATION ====================
+        // IMPORTANT: Replace with your actual Razorpay Key ID
+        const RAZORPAY_KEY_ID = 'rzp_test_YOUR_KEY_ID'; // Get this from Razorpay Dashboard
+        
+        // ==================== BUYNOW PAGE LOGIC ====================
+        
+        const PRICE_PER_ITEM = 199;
+        const ORIGINAL_PRICE = 499;
+        
+        // Get URL parameters to pre-select color
+        function getURLParams() {
+            const params = new URLSearchParams(window.location.search);
+            const color = params.get('color');
+            if (color && ['blue', 'green', 'pink', 'purple'].includes(color)) {
+                document.getElementById(`color-${color}`).checked = true;
+                updateSummary();
+            }
+        }
+
+        // Update order summary
+        function updateSummary() {
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const selectedColor = document.querySelector('input[name="colorVariant"]:checked');
+            const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked');
+            
+            // Update quantity display
+            document.getElementById('summaryQty').textContent = quantity;
+            
+            // Update color display
+            if (selectedColor) {
+                const colorNames = {
+                    'blue': 'Cool Breeze (Blue)',
+                    'green': 'Fresh Mint (Green)',
+                    'pink': 'Berry Bliss (Pink)',
+                    'purple': 'Lavender Dream (Purple)'
+                };
+                document.getElementById('summaryColor').textContent = colorNames[selectedColor.value];
+            }
+            
+            // Update payment method display
+            if (selectedPayment) {
+                const paymentNames = {
+                    'cod': 'Cash on Delivery',
+                    'razorpay': 'Online Payment'
+                };
+                document.getElementById('summaryPayment').textContent = paymentNames[selectedPayment.value];
+                
+                // Update button text
+                const btnText = document.getElementById('btnText');
+                if (selectedPayment.value === 'cod') {
+                    btnText.textContent = 'Place Order';
+                } else {
+                    btnText.textContent = 'Proceed to Pay';
+                }
+            }
+            
+            // Calculate totals
+            const subtotal = PRICE_PER_ITEM * quantity;
+            const total = subtotal;
+            const savings = (ORIGINAL_PRICE - PRICE_PER_ITEM) * quantity;
+            
+            // Update summary
+            document.getElementById('summarySubtotal').textContent = `₹${subtotal}`;
+            document.getElementById('summaryTotal').textContent = `₹${total}`;
+            document.getElementById('buttonTotal').textContent = total;
+            document.getElementById('savingsAmount').textContent = savings;
+        }
+
+        // Quantity controls
+        document.getElementById('decreaseQty').addEventListener('click', function() {
+            const qtyInput = document.getElementById('quantity');
+            let qty = parseInt(qtyInput.value);
+            if (qty > 1) {
+                qtyInput.value = qty - 1;
+                updateSummary();
+            }
+        });
+
+        document.getElementById('increaseQty').addEventListener('click', function() {
+            const qtyInput = document.getElementById('quantity');
+            let qty = parseInt(qtyInput.value);
+            if (qty < 10) {
+                qtyInput.value = qty + 1;
+                updateSummary();
+            }
+        });
+
+        // Listen for changes
+        document.querySelectorAll('input[name="colorVariant"]').forEach(radio => {
+            radio.addEventListener('change', updateSummary);
+        });
+        
+        document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+            radio.addEventListener('change', updateSummary);
+        });
+
+        // Phone number validation
+        document.getElementById('phone').addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '').substr(0, 10);
+        });
+
+        // Pincode validation
+        document.getElementById('pincode').addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '').substr(0, 6);
+        });
+
+        /**
+         * Redirect to order success page with order data
+         * This function builds the URL with all order details and redirects the user
+         */
+        function redirectToOrderSuccess(orderData, orderId, orderDate) {
+            // Build URL with all order details as parameters
+            const params = new URLSearchParams({
+                orderId: orderId,
+                customerName: orderData.customerName,
+                phone: orderData.phone,
+                email: orderData.email,
+                address: `${orderData.street}, ${orderData.city}, ${orderData.state} - ${orderData.pincode}`,
+                productName: orderData.productName,
+                colorVariant: orderData.colorVariant,
+                quantity: orderData.quantity,
+                totalAmount: orderData.totalAmount,
+                paymentMethod: orderData.paymentMethod === 'razorpay' ? 'razorpay' : 'cod',
+                paymentStatus: orderData.paymentStatus,
+                transactionId: orderData.transactionId || '',
+                orderDate: orderDate
+            });
+            
+            // Redirect to order success page
+            window.location.href = `ordersuccess.html?${params.toString()}`;
+        }
+
+        /**
+         * Process Razorpay Payment
+         * Opens Razorpay payment gateway and handles success/failure
+         */
+        function processRazorpayPayment(orderData, orderId, orderDate) {
+            const options = {
+                key: RAZORPAY_KEY_ID,
+                amount: orderData.totalAmount * 100, // Amount in paise
+                currency: 'INR',
+                name: 'Sorsone',
+                description: orderData.productName,
+                order_id: orderId,
+                prefill: {
+                    name: orderData.customerName,
+                    email: orderData.email,
+                    contact: orderData.phone
+                },
+                theme: {
+                    color: '#7CB342'
+                },
+                handler: async function(response) {
+                    // Payment successful
+                    try {
+                        // Update order with payment details
+                        const paymentData = {
+                            orderId: orderId,
+                            razorpayPaymentId: response.razorpay_payment_id,
+                            razorpayOrderId: response.razorpay_order_id,
+                            razorpaySignature: response.razorpay_signature,
+                            paymentStatus: 'Paid'
+                        };
+                        
+                        await sendToBackend('updatePaymentStatus', paymentData);
+                        
+                        // Update order data with transaction details
+                        orderData.paymentStatus = 'Paid';
+                        orderData.transactionId = response.razorpay_payment_id;
+                        
+                        // Redirect to success page
+                        redirectToOrderSuccess(orderData, orderId, orderDate);
+                        
+                    } catch (error) {
+                        console.error('Payment update error:', error);
+                        // Still redirect to success page even if update fails
+                        orderData.paymentStatus = 'Paid';
+                        orderData.transactionId = response.razorpay_payment_id;
+                        redirectToOrderSuccess(orderData, orderId, orderDate);
+                    }
+                },
+                modal: {
+                    ondismiss: function() {
+                        // Payment cancelled - still show order saved message
+                        showAlert('info', 'Payment cancelled. Your order has been saved. You can retry payment from your order history.');
+                        
+                        // Re-enable submit button
+                        const submitBtn = document.getElementById('submitBtn');
+                        submitBtn.disabled = false;
+                        const total = orderData.totalAmount;
+                        submitBtn.innerHTML = `<span id="btnText">Proceed to Pay</span> - ₹<span id="buttonTotal">${total}</span>`;
+                    }
+                }
+            };
+            
+            const rzp = new Razorpay(options);
+            rzp.open();
+        }
+
+        /**
+         * Form validation and submission
+         * Main form handler - validates data and processes order
+         */
+        document.getElementById('orderForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Clear previous errors
+            document.querySelectorAll('.form-group').forEach(group => {
+                group.classList.remove('error');
+            });
+            
+            let isValid = true;
+            
+            // Validate customer name
+            const customerName = document.getElementById('customerName');
+            if (customerName.value.trim() === '') {
+                customerName.closest('.form-group').classList.add('error');
+                isValid = false;
+            }
+            
+            // Validate phone
+            const phone = document.getElementById('phone');
+            if (!validatePhone(phone.value)) {
+                phone.closest('.form-group').classList.add('error');
+                isValid = false;
+            }
+            
+            // Validate email
+            const email = document.getElementById('email');
+            if (!validateEmail(email.value)) {
+                email.closest('.form-group').classList.add('error');
+                isValid = false;
+            }
+            
+            // Validate address fields
+            const street = document.getElementById('street');
+            if (street.value.trim() === '') {
+                street.closest('.form-group').classList.add('error');
+                isValid = false;
+            }
+            
+            const city = document.getElementById('city');
+            if (city.value.trim() === '') {
+                city.closest('.form-group').classList.add('error');
+                isValid = false;
+            }
+            
+            const state = document.getElementById('state');
+            if (state.value.trim() === '') {
+                state.closest('.form-group').classList.add('error');
+                isValid = false;
+            }
+            
+            const pincode = document.getElementById('pincode');
+            if (!validatePincode(pincode.value)) {
+                pincode.closest('.form-group').classList.add('error');
+                isValid = false;
+            }
+            
+            // Validate color selection
+            const selectedColor = document.querySelector('input[name="colorVariant"]:checked');
+            if (!selectedColor) {
+                showAlert('error', 'Please select a color variant');
+                isValid = false;
+            }
+            
+            if (!isValid) {
+                showAlert('error', 'Please fill in all required fields correctly');
+                return;
+            }
+            
+            // Get payment method
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+            
+            // Prepare order data
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const total = PRICE_PER_ITEM * quantity;
+            
+            const orderData = {
+                customerName: customerName.value.trim(),
+                phone: phone.value.trim(),
+                email: email.value.trim(),
+                street: street.value.trim(),
+                city: city.value.trim(),
+                state: state.value.trim(),
+                pincode: pincode.value.trim(),
+                colorVariant: selectedColor.value,
+                productName: CONFIG.PRODUCTS[selectedColor.value],
+                quantity: quantity,
+                totalAmount: total,
+                paymentMethod: paymentMethod,
+                paymentStatus: paymentMethod === 'cod' ? 'COD' : 'Pending',
+                orderDate: new Date().toISOString()
+            };
+            
+            // Disable submit button
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<span id="btnText">Processing...</span> - ₹<span id="buttonTotal">${total}</span>`;
+            
+            try {
+                // Create order in backend
+                const response = await sendToBackend('createOrder', orderData);
+                
+                if (response.status === 'success') {
+                    const orderId = response.orderId;
+                    const orderDate = response.orderDate || new Date().toISOString();
+                    
+                    if (paymentMethod === 'razorpay') {
+                        // Process Razorpay payment
+                        processRazorpayPayment(orderData, orderId, orderDate);
+                    } else {
+                        // COD order - redirect directly to success page
+                        redirectToOrderSuccess(orderData, orderId, orderDate);
+                    }
+                } else {
+                    showAlert('error', response.message || 'Failed to place order. Please try again.');
+                    
+                    // Re-enable submit button
+                    submitBtn.disabled = false;
+                    const btnText = paymentMethod === 'cod' ? 'Place Order' : 'Proceed to Pay';
+                    submitBtn.innerHTML = `<span id="btnText">${btnText}</span> - ₹<span id="buttonTotal">${total}</span>`;
+                }
+            } catch (error) {
+                console.error('Order submission error:', error);
+                showAlert('error', 'Failed to connect to server. Please check your internet connection and try again.');
+                
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                const btnText = paymentMethod === 'cod' ? 'Place Order' : 'Proceed to Pay';
+                submitBtn.innerHTML = `<span id="btnText">${btnText}</span> - ₹<span id="buttonTotal">${total}</span>`;
+            }
+        });
+
+        // Initialize on page load
+        getURLParams();
+        updateSummary();
+    </script>
+</body>
+</html>
