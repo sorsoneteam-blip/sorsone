@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Checkout - Sorsone Premium Oversized T-Shirts">
+    <title>Checkout - Sorsone</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .checkout-page {
+            margin-top: 130px;
+            min-height: calc(100vh - 130px);
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        }
+
+        .checkout-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .checkout-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .checkout-header h1 {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            letter-spacing: 3px;
+            color: var(--dark-bg);
+            margin-bottom: 0.5rem;
+        }
+
+        .checkout-header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .checkout-content {
+            display: grid;
+            grid-template-columns: 1fr 450px;
+            gap: 3rem;
+        }
+
+        .checkout-form-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            color: var(--dark-bg);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group label .required {
+            color: var(--primary-red);
+            margin-left: 3px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .order-summary {
+            position: sticky;
+            top: 150px;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            height: fit-content;
+        }
+
+        .order-summary h2 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            color: var(--dark-bg);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .summary-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .summary-item-image {
+            width: 60px;
+            height: 70px;
+            background: #f5f5f5;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .summary-item-image i {
+            font-size: 1.5rem;
+            color: rgba(0,0,0,0.2);
+        }
+
+        .summary-item-details {
+            flex: 1;
+        }
+
+        .summary-item-details h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .summary-item-details p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .summary-item-price {
+            font-weight: 700;
+            color: var(--primary-red);
+        }
+
+        .summary-totals {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .summary-row.subtotal {
+            color: var(--text-dark);
+        }
+
+        .summary-row.shipping {
+            color: var(--text-dark);
+        }
+
+        .summary-row.discount {
+            color: #28a745;
+        }
+
+        .summary-row.total {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark-bg);
+            padding-top: 1rem;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .payment-methods {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .payment-methods h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem;
+            margin-bottom: 0.8rem;
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-option:hover {
+            border-color: var(--primary-red);
+        }
+
+        .payment-option input[type="radio"] {
+            margin-right: 1rem;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .payment-option label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .payment-option i {
+            font-size: 1.2rem;
+            color: var(--text-light);
+        }
+
+        .place-order-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .place-order-btn:hover {
+            background: #b71c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(211, 47, 47, 0.3);
+        }
+
+        .secure-checkout {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .secure-checkout i {
+            color: #28a745;
+        }
+
+        .promo-code {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .promo-code input {
+            flex: 1;
+        }
+
+        .promo-code button {
+            padding: 0.9rem 1.5rem;
+            background: var(--dark-bg);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .promo-code button:hover {
+            background: #000;
+        }
+
+        .success-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+            text-align: center;
+            z-index: 10000;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .success-message i {
+            font-size: 4rem;
+            color: #28a745;
+            margin-bottom: 1.5rem;
+        }
+
+        .success-message h2 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--dark-bg);
+            margin-bottom: 1rem;
+        }
+
+        .success-message p {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 9999;
+        }
+
+        .overlay.show {
+            display: block;
+        }
+
+        @media (max-width: 968px) {
+            .checkout-content {
+                grid-template-columns: 1fr;
+            }
+
+            .order-summary {
+                position: static;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .checkout-page {
+                padding: 2rem 1rem;
+            }
+
+            .checkout-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .checkout-form-section {
+                padding: 1.5rem;
+            }
+
+            .order-summary {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Republic Day Offer Banner -->
+    <div class="republic-day-banner">
+        <div class="flag-stripe saffron"></div>
+        <div class="flag-stripe white">
+            <div class="ashoka-chakra"></div>
+        </div>
+        <div class="flag-stripe green"></div>
+        <div class="banner-content">
+            <div class="banner-text">
+                <span class="banner-icon">🇮🇳</span>
+                <span class="banner-main">REPUBLIC DAY SPECIAL</span>
+                <span class="banner-separator">|</span>
+                <span class="banner-offer">Buy 1 @ ₹299 • Buy 2 @ ₹499 • Buy 3 @ ₹799</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="index.html#products">Shop</a>
+            </div>
+            <a href="index.html" class="logo">SORSONE</a>
+            <div class="nav-right">
+                <i class="fas fa-search nav-icon" id="searchIcon"></i>
+                <i class="fas fa-user nav-icon" id="userIcon"></i>
+                <div class="cart-wrapper">
+                    <i class="fas fa-shopping-bag nav-icon" id="cartIcon"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+                <i class="fas fa-bars nav-icon" id="menuIcon"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <span class="logo">SORSONE</span>
+            <i class="fas fa-times" id="closeMenu"></i>
+        </div>
+        <div class="mobile-menu-content">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="index.html#products">Shop</a>
+            <a href="contactus.html">Contact</a>
+            <div class="mobile-menu-divider"></div>
+            <a href="#" id="mobileUserIcon"><i class="fas fa-user"></i> Account</a>
+            <a href="add-to-cart.html" id="mobileCartIcon"><i class="fas fa-shopping-bag"></i> Cart (<span id="mobileCartCount">0</span>)</a>
+        </div>
+    </div>
+
+    <!-- Checkout Page -->
+    <div class="checkout-page">
+        <div class="checkout-container">
+            <div class="checkout-header">
+                <h1>CHECKOUT</h1>
+                <p>Complete your order in just a few steps</p>
+            </div>
+
+            <div class="checkout-content">
+                <!-- Checkout Form -->
+                <div class="checkout-form-section">
+                    <form id="checkoutForm">
+                        <!-- Customer Information -->
+                        <h2 class="section-title">CUSTOMER INFORMATION</h2>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name <span class="required">*</span></label>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name <span class="required">*</span></label>
+                                <input type="text" id="lastName" name="lastName" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email Address <span class="required">*</span></label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number <span class="required">*</span></label>
+                                <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
+                            </div>
+                        </div>
+
+                        <!-- Shipping Address -->
+                        <h2 class="section-title" style="margin-top: 2rem;">SHIPPING ADDRESS</h2>
+                        
+                        <div class="form-group">
+                            <label for="address">Street Address <span class="required">*</span></label>
+                            <input type="text" id="address" name="address" placeholder="House number and street name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="apartment">Apartment, Suite, etc. (Optional)</label>
+                            <input type="text" id="apartment" name="apartment" placeholder="Apartment, suite, unit, building, floor, etc.">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city">City <span class="required">*</span></label>
+                                <input type="text" id="city" name="city" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="state">State <span class="required">*</span></label>
+                                <select id="state" name="state" required>
+                                    <option value="">Select State</option>
+                                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                    <option value="Assam">Assam</option>
+                                    <option value="Bihar">Bihar</option>
+                                    <option value="Chhattisgarh">Chhattisgarh</option>
+                                    <option value="Goa">Goa</option>
+                                    <option value="Gujarat">Gujarat</option>
+                                    <option value="Haryana">Haryana</option>
+                                    <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                    <option value="Jharkhand">Jharkhand</option>
+                                    <option value="Karnataka">Karnataka</option>
+                                    <option value="Kerala">Kerala</option>
+                                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                    <option value="Maharashtra">Maharashtra</option>
+                                    <option value="Manipur">Manipur</option>
+                                    <option value="Meghalaya">Meghalaya</option>
+                                    <option value="Mizoram">Mizoram</option>
+                                    <option value="Nagaland">Nagaland</option>
+                                    <option value="Odisha">Odisha</option>
+                                    <option value="Punjab">Punjab</option>
+                                    <option value="Rajasthan">Rajasthan</option>
+                                    <option value="Sikkim">Sikkim</option>
+                                    <option value="Tamil Nadu">Tamil Nadu</option>
+                                    <option value="Telangana">Telangana</option>
+                                    <option value="Tripura">Tripura</option>
+                                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                    <option value="Uttarakhand">Uttarakhand</option>
+                                    <option value="West Bengal">West Bengal</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="pincode">Pincode <span class="required">*</span></label>
+                                <input type="text" id="pincode" name="pincode" pattern="[0-9]{6}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="country">Country</label>
+                                <input type="text" id="country" name="country" value="India" readonly>
+                            </div>
+                        </div>
+
+                        <!-- Additional Information -->
+                        <h2 class="section-title" style="margin-top: 2rem;">ADDITIONAL INFORMATION</h2>
+                        
+                        <div class="form-group">
+                            <label for="orderNotes">Order Notes (Optional)</label>
+                            <textarea id="orderNotes" name="orderNotes" placeholder="Special instructions for delivery, gift message, etc."></textarea>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="order-summary">
+                    <h2>ORDER SUMMARY</h2>
+                    
+                    <div id="orderItems">
+                        <!-- Items will be loaded from cart -->
+                    </div>
+
+                    <div class="promo-code">
+                        <input type="text" id="promoInput" placeholder="Enter promo code">
+                        <button type="button" onclick="applyPromo()">Apply</button>
+                    </div>
+
+                    <div class="summary-totals">
+                        <div class="summary-row subtotal">
+                            <span>Subtotal:</span>
+                            <span id="subtotalAmount">₹0</span>
+                        </div>
+                        <div class="summary-row shipping">
+                            <span>Shipping:</span>
+                            <span id="shippingAmount">FREE</span>
+                        </div>
+                        <div class="summary-row discount" id="discountRow" style="display: none;">
+                            <span>Discount:</span>
+                            <span id="discountAmount">-₹0</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total:</span>
+                            <span id="totalAmount">₹0</span>
+                        </div>
+                    </div>
+
+                    <div class="payment-methods">
+                        <h3>Payment Method</h3>
+                        <div class="payment-option">
+                            <input type="radio" id="cod" name="payment" value="cod" checked>
+                            <label for="cod">
+                                <i class="fas fa-money-bill-wave"></i>
+                                Cash on Delivery
+                            </label>
+                        </div>
+                        <div class="payment-option">
+                            <input type="radio" id="upi" name="payment" value="upi">
+                            <label for="upi">
+                                <i class="fas fa-mobile-alt"></i>
+                                UPI Payment
+                            </label>
+                        </div>
+                        <div class="payment-option">
+                            <input type="radio" id="card" name="payment" value="card">
+                            <label for="card">
+                                <i class="fas fa-credit-card"></i>
+                                Credit/Debit Card
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="button" class="place-order-btn" onclick="placeOrder()">
+                        PLACE ORDER
+                    </button>
+
+                    <div class="secure-checkout">
+                        <i class="fas fa-lock"></i>
+                        <span>Secure Checkout</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Message Modal -->
+    <div class="overlay" id="overlay"></div>
+    <div class="success-message" id="successMessage">
+        <i class="fas fa-check-circle"></i>
+        <h2>Order Placed Successfully!</h2>
+        <p>Thank you for your order. You will receive a confirmation email shortly.</p>
+        <p><strong>Order ID: <span id="orderId"></span></strong></p>
+        <button class="shop-btn" onclick="window.location.href='index.html'">Continue Shopping</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>ABOUT SORSONE</h4>
+                <ul>
+                    <li><a href="about.html">Our Story</a></li>
+                    <li><a href="about.html#sustainability">Sustainability</a></li>
+                    <li><a href="contactus.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>CUSTOMER CARE</h4>
+                <ul>
+                    <li><a href="shipping.html">Shipping & Delivery</a></li>
+                    <li><a href="refund.html">Returns & Refunds</a></li>
+                    <li><a href="contactus.html">Track Order</a></li>
+                    <li><a href="contactus.html">FAQs</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>LEGAL</h4>
+                <ul>
+                    <li><a href="privacypolicy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms & Conditions</a></li>
+                    <li><a href="refund.html">Refund Policy</a></li>
+                    <li><a href="shipping.html">Shipping Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>CONNECT</h4>
+                <ul>
+                    <li><a href="/cdn-cgi/l/email-protection#0f7c607d7c60616a21606969666c666e634f68626e6663216c6062"><i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="4c3f233e3f23222962232a2a252f252d200c2b212d2520622f2321">[email&#160;protected]</span></a></li>
+                    <li><a href="tel:7907090396"><i class="fas fa-phone"></i> +91 7907090396</a></li>
+                    <li><a href="https://www.sorsone.com"><i class="fas fa-globe"></i> www.sorsone.com</a></li>
+                </ul>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Sorsone. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="script.js"></script>
+    <script>
+        // Load cart items and calculate totals
+        function loadCheckoutData() {
+            const cart = JSON.parse(localStorage.getItem('sorsoneCart')) || [];
+            const orderItems = document.getElementById('orderItems');
+            
+            if (cart.length === 0) {
+                window.location.href = 'add-to-cart.html';
+                return;
+            }
+
+            // Calculate total items
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            orderItems.innerHTML = '';
+
+            cart.forEach(item => {
+                const itemPrice = 299; // Offer price per item
+                const itemTotal = itemPrice * item.quantity;
+
+                orderItems.innerHTML += `
+                    <div class="summary-item">
+                        <div class="summary-item-image">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <div class="summary-item-details">
+                            <h4>${item.name}</h4>
+                            <p>${item.colorName || item.color} • ${item.size} • Qty: ${item.quantity}</p>
+                        </div>
+                        <div class="summary-item-price">
+                            ₹${itemTotal.toLocaleString('en-IN')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Apply combo pricing logic
+            let actualTotal = 0;
+            if (totalItems === 1) {
+                actualTotal = 299;
+            } else if (totalItems === 2) {
+                actualTotal = 499;
+            } else if (totalItems >= 3) {
+                const sets = Math.floor(totalItems / 3);
+                const remainder = totalItems % 3;
+                actualTotal = (sets * 799);
+                if (remainder === 1) {
+                    actualTotal += 299;
+                } else if (remainder === 2) {
+                    actualTotal += 499;
+                }
+            }
+
+            const originalTotal = totalItems * 1299;
+            const savings = originalTotal - actualTotal;
+
+            document.getElementById('subtotalAmount').textContent = `₹${actualTotal.toLocaleString('en-IN')}`;
+            document.getElementById('totalAmount').textContent = `₹${actualTotal.toLocaleString('en-IN')}`;
+            updateCartCount();
+        }
+
+        // Apply promo code
+        function applyPromo() {
+            const promoCode = document.getElementById('promoInput').value.trim().toLowerCase();
+            const subtotal = parseInt(document.getElementById('subtotalAmount').textContent.replace(/[₹,]/g, ''));
+            
+            const promoCodes = {
+                'republic26': 100,
+                'sorsone50': 50,
+                'welcome10': 10
+            };
+
+            if (promoCodes[promoCode]) {
+                const discount = promoCodes[promoCode];
+                const total = subtotal - discount;
+                
+                document.getElementById('discountRow').style.display = 'flex';
+                document.getElementById('discountAmount').textContent = `-₹${discount}`;
+                document.getElementById('totalAmount').textContent = `₹${total.toLocaleString()}`;
+                
+                alert(`Promo code applied! You saved ₹${discount}`);
+            } else {
+                alert('Invalid promo code');
+            }
+        }
+
+        // Place order
+        function placeOrder() {
+            const form = document.getElementById('checkoutForm');
+            
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            const paymentMethod = document.querySelector('input[name="payment"]:checked');
+            if (!paymentMethod) {
+                alert('Please select a payment method');
+                return;
+            }
+            
+            // Get cart items and add price to each item
+            const cart = JSON.parse(localStorage.getItem('sorsoneCart')) || [];
+            const itemsWithPrice = cart.map(item => ({
+                ...item,
+                price: 299 // Individual price per item
+            }));
+            
+            // Collect form data
+            const orderData = {
+                orderId: 'SOR' + Date.now(),
+                timestamp: new Date().toISOString(),
+                status: 'pending', // Default status for new orders
+                customer: {
+                    firstName: document.getElementById('firstName').value,
+                    lastName: document.getElementById('lastName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value
+                },
+                shipping: {
+                    address: document.getElementById('address').value,
+                    apartment: document.getElementById('apartment').value,
+                    city: document.getElementById('city').value,
+                    state: document.getElementById('state').value,
+                    pincode: document.getElementById('pincode').value,
+                    country: document.getElementById('country').value
+                },
+                items: itemsWithPrice,
+                payment: {
+                    method: paymentMethod.value,
+                    amount: document.getElementById('totalAmount').textContent,
+                    status: 'completed' // Mark payment as completed
+                },
+                notes: document.getElementById('orderNotes').value
+            };
+
+            // Save order to localStorage (in production, this would be sent to a server)
+            let orders = JSON.parse(localStorage.getItem('orders')) || [];
+            orders.push(orderData);
+            localStorage.setItem('orders', JSON.stringify(orders));
+
+            // Clear cart
+            localStorage.removeItem('sorsoneCart');
+            
+            // Update cart count in UI
+            updateCartCount();
+
+            // Show success message
+            document.getElementById('orderId').textContent = orderData.orderId;
+            document.getElementById('overlay').classList.add('show');
+            document.getElementById('successMessage').classList.add('show');
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('sorsoneCart')) || [];
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+            if (document.getElementById('m
