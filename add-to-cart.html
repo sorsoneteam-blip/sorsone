@@ -224,19 +224,93 @@
         }
 
         .item-subtotal {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: var(--text-dark);
         }
 
+        /* NEW: Customer & Shipping Information Styles */
+        .info-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            margin-top: 2rem;
+        }
+
+        .info-section h2 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            color: var(--dark-bg);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group label .required {
+            color: var(--primary-red);
+            margin-left: 2px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.9rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: var(--font-body);
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-red);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-group input::placeholder {
+            color: #999;
+        }
+
+        /* Cart Summary Styles */
         .cart-summary {
             background: white;
             border-radius: 12px;
             padding: 2rem;
             box-shadow: 0 2px 15px rgba(0,0,0,0.08);
-            height: fit-content;
             position: sticky;
             top: 150px;
+            height: fit-content;
         }
 
         .cart-summary h2 {
@@ -245,107 +319,114 @@
             letter-spacing: 2px;
             margin-bottom: 1.5rem;
             color: var(--dark-bg);
+            text-align: center;
         }
 
         .summary-row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 0.8rem 0;
+            padding: 1rem 0;
             border-bottom: 1px solid var(--border-color);
         }
 
         .summary-row:last-of-type {
             border-bottom: 2px solid var(--dark-bg);
+            font-size: 1.3rem;
             font-weight: 700;
-            font-size: 1.2rem;
-            padding: 1.2rem 0;
-            margin-top: 0.5rem;
         }
 
         .summary-label {
             color: var(--text-light);
-            font-size: 0.95rem;
-        }
-
-        .summary-row:last-of-type .summary-label {
-            color: var(--text-dark);
-            font-size: 1.1rem;
+            font-weight: 500;
         }
 
         .summary-value {
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-dark);
         }
 
-        .savings {
-            color: #28a745 !important;
-            font-weight: 700;
+        .summary-value.savings {
+            color: #28a745;
+        }
+
+        .discount-info {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .discount-info p {
+            margin: 0;
+            color: #e65100;
+            font-weight: 600;
         }
 
         .checkout-btn {
             width: 100%;
+            padding: 1.2rem;
             background: var(--primary-red);
             color: white;
             border: none;
-            padding: 1.2rem;
-            font-size: 1rem;
-            text-transform: uppercase;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: var(--font-display);
             letter-spacing: 2px;
             cursor: pointer;
-            font-weight: 700;
             transition: all 0.3s ease;
-            border-radius: 8px;
-            margin-top: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.8rem;
+            margin-top: 1rem;
         }
 
         .checkout-btn:hover {
-            background: #b71c1c;
+            background: #c62828;
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(211, 47, 47, 0.3);
+            box-shadow: 0 5px 15px rgba(229, 57, 53, 0.3);
+        }
+
+        .checkout-btn i {
+            margin-right: 0.5rem;
         }
 
         .continue-shopping-btn {
             width: 100%;
-            background: transparent;
-            color: var(--dark-bg);
-            border: 2px solid var(--dark-bg);
             padding: 1rem;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            background: transparent;
+            color: var(--text-dark);
+            border: 2px solid var(--border-color);
             border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
             margin-top: 1rem;
+            transition: all 0.3s ease;
         }
 
         .continue-shopping-btn:hover {
             background: var(--dark-bg);
             color: white;
+            border-color: var(--dark-bg);
         }
 
-        .discount-info {
-            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
-            padding: 1rem;
+        .btn-primary {
+            background: var(--dark-bg);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
             border-radius: 8px;
-            margin-top: 1rem;
-            border-left: 4px solid #ffc107;
-        }
-
-        .discount-info p {
-            font-size: 0.85rem;
-            color: #856404;
-            margin: 0;
+            font-size: 1rem;
             font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        @media (max-width: 1024px) {
+        .btn-primary:hover {
+            background: var(--primary-red);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
             .cart-content {
                 grid-template-columns: 1fr;
             }
@@ -353,13 +434,13 @@
             .cart-summary {
                 position: static;
             }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
-        @media (max-width: 640px) {
-            .cart-page {
-                padding: 2rem 1rem;
-            }
-
+        @media (max-width: 768px) {
             .cart-header h1 {
                 font-size: 2.5rem;
             }
@@ -379,156 +460,92 @@
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
-                margin-top: 1rem;
             }
 
-            .item-details h3 {
-                font-size: 1rem;
-            }
-
-            .item-offer-price {
-                font-size: 1.2rem;
+            .item-subtotal {
+                order: -1;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- Navigation Header -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="nav-left">
-                <a href="index.html">Home</a>
-                <a href="about.html">About</a>
-                <a href="index.html#products">Shop</a>
-            </div>
+            <!-- Logo -->
             <a href="index.html" class="logo">SORSONE</a>
-            <div class="nav-right">
-                <i class="fas fa-search nav-icon" id="searchIcon"></i>
-                <i class="fas fa-user nav-icon" id="userIcon"></i>
-                <div class="cart-wrapper">
-                    <i class="fas fa-shopping-bag nav-icon" id="cartIcon"></i>
+            
+            <!-- Desktop Navigation -->
+            <div class="nav-links">
+                <a href="index.html#home">HOME</a>
+                <a href="index.html#products">SHOP</a>
+                <a href="index.html#about">ABOUT</a>
+                <a href="index.html#contact">CONTACT</a>
+            </div>
+
+            <!-- Icons -->
+            <div class="nav-icons">
+                <i class="fas fa-search" id="searchIcon"></i>
+                <i class="fas fa-user" id="userIcon"></i>
+                <div class="cart-icon-wrapper">
+                    <i class="fas fa-shopping-cart" id="cartIcon"></i>
                     <span class="cart-count" id="cartCount">0</span>
                 </div>
-                <i class="fas fa-bars nav-icon" id="menuIcon"></i>
+                <i class="fas fa-bars menu-icon" id="menuIcon"></i>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-header">
+                <span class="logo">SORSONE</span>
+                <i class="fas fa-times" id="closeMenu"></i>
+            </div>
+            <div class="mobile-menu-links">
+                <a href="index.html#home">HOME</a>
+                <a href="index.html#products">SHOP</a>
+                <a href="index.html#about">ABOUT</a>
+                <a href="index.html#contact">CONTACT</a>
+                <div class="mobile-cart-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Cart (<span id="mobileCartCount">0</span>)</span>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-menu-header">
-            <span class="logo">SORSONE</span>
-            <i class="fas fa-times" id="closeMenu"></i>
-        </div>
-        <div class="mobile-menu-content">
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="index.html#products">Shop</a>
-            <a href="contactus.html">Contact</a>
-            <div class="mobile-menu-divider"></div>
-            <a href="#" id="mobileUserIcon"><i class="fas fa-user"></i> Account</a>
-            <a href="add-to-cart.html" id="mobileCartIcon"><i class="fas fa-shopping-bag"></i> Cart (<span id="mobileCartCount">0</span>)</a>
-        </div>
-    </div>
-
-    <!-- Cart Page -->
+    <!-- Cart Page Content -->
     <div class="cart-page">
         <div class="cart-container">
             <div class="cart-header">
-                <h1>SHOPPING CART</h1>
-                <p id="itemCount">Loading your cart...</p>
+                <h1>YOUR CART</h1>
+                <p id="itemCount">0 items in your cart</p>
             </div>
 
             <div class="cart-content" id="cartContent">
-                <!-- Cart items will be loaded here -->
+                <!-- Cart items and summary will be loaded here by JavaScript -->
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-section">
-                <h4>ABOUT SORSONE</h4>
-                <ul>
-                    <li><a href="about.html">Our Story</a></li>
-                    <li><a href="about.html#sustainability">Sustainability</a></li>
-                    <li><a href="contactus.html">Contact Us</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>CUSTOMER CARE</h4>
-                <ul>
-                    <li><a href="shipping.html">Shipping & Delivery</a></li>
-                    <li><a href="refund.html">Returns & Refunds</a></li>
-                    <li><a href="contactus.html">Track Order</a></li>
-                    <li><a href="contactus.html">FAQs</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>LEGAL</h4>
-                <ul>
-                    <li><a href="privacypolicy.html">Privacy Policy</a></li>
-                    <li><a href="terms.html">Terms & Conditions</a></li>
-                    <li><a href="refund.html">Refund Policy</a></li>
-                    <li><a href="shipping.html">Shipping Policy</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>CONNECT</h4>
-                <ul>
-                    <li><a href="/cdn-cgi/l/email-protection#9be8f4e9e8f4f5feb5effefaf6dbfcf6faf2f7b5f8f4f6"><i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="f1829e83829e9f94df8594909cb1969c90989ddf929e9c">[email&#160;protected]</span></a></li>
-                    <li><a href="tel:7907090396"><i class="fas fa-phone"></i> +91 7907090396</a></li>
-                    <li><a href="https://www.sorsone.com"><i class="fas fa-globe"></i> www.sorsone.com</a></li>
-                </ul>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Sorsone. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        // Cart management - DO NOT load script.js to avoid conflicts
-        let cart = [];
-
-        // Load and display cart
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Cart page loaded');
-            loadCart();
-            updateCartCount();
-            setupNavigation();
-        });
+    <script>
+        let cart = JSON.parse(localStorage.getItem('sorsoneCart')) || [];
 
         function loadCart() {
-            // Get cart from localStorage
-            const savedCart = localStorage.getItem('sorsoneCart');
-            console.log('Saved cart:', savedCart);
-            
-            cart = savedCart ? JSON.parse(savedCart) : [];
-            
             const cartContent = document.getElementById('cartContent');
             const itemCount = document.getElementById('itemCount');
-            
+
             if (cart.length === 0) {
                 cartContent.innerHTML = `
-                    <div class="cart-items" style="grid-column: 1/-1;">
-                        <div class="empty-cart">
-                            <i class="fas fa-shopping-bag"></i>
-                            <h2>Your Cart is Empty</h2>
-                            <p>Add some awesome oversized t-shirts to get started!</p>
-                            <button class="shop-btn" onclick="window.location.href='index.html#products'">
-                                Start Shopping
-                            </button>
-                        </div>
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h2>Your cart is empty</h2>
+                        <p>Add some awesome Sorsone oversized tees!</p>
+                        <button class="btn-primary" onclick="window.location.href='index.html#products'">
+                            Start Shopping
+                        </button>
                     </div>
                 `;
-                itemCount.textContent = 'No items in cart';
                 return;
             }
 
@@ -625,9 +642,109 @@
             }
 
             cartContent.innerHTML = `
-                <div class="cart-items">
-                    ${cartItemsHTML}
+                <div>
+                    <div class="cart-items">
+                        ${cartItemsHTML}
+                    </div>
+                    
+                    <!-- Customer Information Section -->
+                    <div class="info-section">
+                        <h2>CUSTOMER INFORMATION</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>First Name <span class="required">*</span></label>
+                                <input type="text" id="firstName" placeholder="Enter first name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Last Name <span class="required">*</span></label>
+                                <input type="text" id="lastName" placeholder="Enter last name" required>
+                            </div>
+                            <div class="form-group full-width">
+                                <label>Email Address <span class="required">*</span></label>
+                                <input type="email" id="email" placeholder="your.email@example.com" required>
+                            </div>
+                            <div class="form-group full-width">
+                                <label>Phone Number <span class="required">*</span></label>
+                                <input type="tel" id="phone" placeholder="+91 XXXXX XXXXX" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shipping Address Section -->
+                    <div class="info-section">
+                        <h2>SHIPPING ADDRESS</h2>
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label>Address Line 1 <span class="required">*</span></label>
+                                <input type="text" id="address1" placeholder="House No., Street Name" required>
+                            </div>
+                            <div class="form-group full-width">
+                                <label>Address Line 2</label>
+                                <input type="text" id="address2" placeholder="Apartment, Suite, Building (Optional)">
+                            </div>
+                            <div class="form-group">
+                                <label>City <span class="required">*</span></label>
+                                <input type="text" id="city" placeholder="Enter city" required>
+                            </div>
+                            <div class="form-group">
+                                <label>State <span class="required">*</span></label>
+                                <select id="state" required>
+                                    <option value="">Select State</option>
+                                    <option value="AN">Andaman and Nicobar Islands</option>
+                                    <option value="AP">Andhra Pradesh</option>
+                                    <option value="AR">Arunachal Pradesh</option>
+                                    <option value="AS">Assam</option>
+                                    <option value="BR">Bihar</option>
+                                    <option value="CH">Chandigarh</option>
+                                    <option value="CT">Chhattisgarh</option>
+                                    <option value="DN">Dadra and Nagar Haveli</option>
+                                    <option value="DD">Daman and Diu</option>
+                                    <option value="DL">Delhi</option>
+                                    <option value="GA">Goa</option>
+                                    <option value="GJ">Gujarat</option>
+                                    <option value="HR">Haryana</option>
+                                    <option value="HP">Himachal Pradesh</option>
+                                    <option value="JK">Jammu and Kashmir</option>
+                                    <option value="JH">Jharkhand</option>
+                                    <option value="KA">Karnataka</option>
+                                    <option value="KL">Kerala</option>
+                                    <option value="LA">Ladakh</option>
+                                    <option value="LD">Lakshadweep</option>
+                                    <option value="MP">Madhya Pradesh</option>
+                                    <option value="MH">Maharashtra</option>
+                                    <option value="MN">Manipur</option>
+                                    <option value="ML">Meghalaya</option>
+                                    <option value="MZ">Mizoram</option>
+                                    <option value="NL">Nagaland</option>
+                                    <option value="OR">Odisha</option>
+                                    <option value="PY">Puducherry</option>
+                                    <option value="PB">Punjab</option>
+                                    <option value="RJ">Rajasthan</option>
+                                    <option value="SK">Sikkim</option>
+                                    <option value="TN">Tamil Nadu</option>
+                                    <option value="TG">Telangana</option>
+                                    <option value="TR">Tripura</option>
+                                    <option value="UP">Uttar Pradesh</option>
+                                    <option value="UT">Uttarakhand</option>
+                                    <option value="WB">West Bengal</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>PIN Code <span class="required">*</span></label>
+                                <input type="text" id="pincode" placeholder="Enter PIN code" maxlength="6" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Country <span class="required">*</span></label>
+                                <input type="text" id="country" value="India" readonly>
+                            </div>
+                            <div class="form-group full-width">
+                                <label>Delivery Instructions (Optional)</label>
+                                <textarea id="instructions" placeholder="Any special delivery instructions..."></textarea>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="cart-summary">
                     <h2>ORDER SUMMARY</h2>
                     <div class="summary-row">
@@ -659,7 +776,7 @@
 
                     <button class="checkout-btn" onclick="proceedToCheckout()">
                         <i class="fas fa-lock"></i>
-                        PROCEED TO CHECKOUT
+                        PAY NOW
                     </button>
                     <button class="continue-shopping-btn" onclick="window.location.href='index.html#products'">
                         Continue Shopping
@@ -696,9 +813,62 @@
                 alert('Your cart is empty!');
                 return;
             }
+
+            // Validate customer information
+            const firstName = document.getElementById('firstName')?.value.trim();
+            const lastName = document.getElementById('lastName')?.value.trim();
+            const email = document.getElementById('email')?.value.trim();
+            const phone = document.getElementById('phone')?.value.trim();
+            const address1 = document.getElementById('address1')?.value.trim();
+            const city = document.getElementById('city')?.value.trim();
+            const state = document.getElementById('state')?.value;
+            const pincode = document.getElementById('pincode')?.value.trim();
+
+            if (!firstName || !lastName || !email || !phone || !address1 || !city || !state || !pincode) {
+                alert('Please fill in all required fields (marked with *)');
+                return;
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+
+            // Phone validation (basic Indian format)
+            const phoneRegex = /^[\d\s\+\-\(\)]{10,}$/;
+            if (!phoneRegex.test(phone)) {
+                alert('Please enter a valid phone number');
+                return;
+            }
+
+            // PIN code validation
+            const pincodeRegex = /^\d{6}$/;
+            if (!pincodeRegex.test(pincode)) {
+                alert('Please enter a valid 6-digit PIN code');
+                return;
+            }
+
+            // Save customer information to localStorage
+            const customerInfo = {
+                firstName,
+                lastName,
+                email,
+                phone,
+                address1,
+                address2: document.getElementById('address2')?.value.trim() || '',
+                city,
+                state,
+                pincode,
+                country: 'India',
+                instructions: document.getElementById('instructions')?.value.trim() || ''
+            };
+
+            localStorage.setItem('sorsoneCustomerInfo', JSON.stringify(customerInfo));
             
-            // Redirect to checkout page
-            window.location.href = 'checkout.html';
+            // Redirect to Razorpay payment link
+            window.location.href = 'https://razorpay.me/@madathilkunnathajithkumar';
         }
 
         function updateCartCount() {
