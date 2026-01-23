@@ -1,6 +1,7 @@
 // ===== SORSONE - JavaScript for Oversized T-Shirts =====
 
 // Product Data - Updated with new pricing ₹299 (77% OFF from ₹1299)
+// All sizes now include XS and 3XL
 const products = [
     { 
         id: 1, 
@@ -12,7 +13,7 @@ const products = [
         colorName: 'Black', 
         description: 'Classic & Timeless',
         image: 'images/black-front.jpg', 
-        sizes: ['S', 'M', 'L', 'XL', 'XXL'] 
+        sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL'] 
     },
     { 
         id: 2, 
@@ -24,7 +25,7 @@ const products = [
         colorName: 'Cool Blue', 
         description: 'Fresh & Vibrant',
         image: 'images/cool-blue.jpg', 
-        sizes: ['S', 'M', 'L', 'XL', 'XXL'] 
+        sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL'] 
     },
     { 
         id: 3, 
@@ -36,7 +37,7 @@ const products = [
         colorName: 'Lavender', 
         description: 'Soft & Elegant',
         image: 'images/lavender.jpg', 
-        sizes: ['S', 'M', 'L', 'XL', 'XXL'] 
+        sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL'] 
     },
     { 
         id: 4, 
@@ -48,7 +49,7 @@ const products = [
         colorName: 'Navy Blue', 
         description: 'Deep & Sophisticated',
         image: 'images/navy-blue.jpg', 
-        sizes: ['S', 'M', 'L', 'XL', 'XXL'] 
+        sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL'] 
     },
     { 
         id: 5, 
@@ -60,7 +61,7 @@ const products = [
         colorName: 'Old Olive', 
         description: 'Earthy & Natural',
         image: 'images/old-olive.jpg', 
-        sizes: ['S', 'M', 'L', 'XL', 'XXL'] 
+        sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL'] 
     },
     { 
         id: 6, 
@@ -72,7 +73,7 @@ const products = [
         colorName: 'Rocky Maroon', 
         description: 'Rich & Bold',
         image: 'images/maroon.jpg', 
-        sizes: ['S', 'M', 'L', 'XL', 'XXL'] 
+        sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL'] 
     },
     { 
         id: 7, 
@@ -84,7 +85,7 @@ const products = [
         colorName: 'Rose Wood', 
         description: 'Warm & Refined',
         image: 'images/rose-wood.jpg', 
-        sizes: ['S', 'M', 'L', 'XL', 'XXL'] 
+        sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL'] 
     },
     { 
         id: 8, 
@@ -96,7 +97,7 @@ const products = [
         colorName: 'Steel Grey', 
         description: 'Modern & Versatile',
         image: 'images/steel-grey.jpg', 
-        sizes: ['S', 'M', 'L', 'XL', 'XXL'] 
+        sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL'] 
     },
     { 
         id: 9, 
@@ -108,7 +109,7 @@ const products = [
         colorName: 'White', 
         description: 'Pure & Clean',
         image: 'images/white-front.jpg', 
-        sizes: ['S', 'M', 'L', 'XL', 'XXL'] 
+        sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL'] 
     }
 ];
 
@@ -419,7 +420,7 @@ function setupScrollAnimations() {
     }, observerOptions);
     
     // Observe elements
-    const animateElements = document.querySelectorAll('.product-card, .color-card, .feature-card, .collection-item');
+    const animateElements = document.querySelectorAll('.product-card, .color-card, .feature-card, .collection-item, .combo-card');
     
     animateElements.forEach(el => {
         el.style.opacity = '0';
@@ -454,6 +455,35 @@ console.log('%c║     SORSONE                       ║', 'color: #D32F2F; font
 console.log('%c║     Premium Oversized T-Shirts    ║', 'color: #666; font-size: 12px;');
 console.log('%c╚═══════════════════════════════════╝', 'color: #D32F2F; font-weight: bold;');
 console.log('%cWebsite: https://www.sorsone.com', 'color: #666;');
-console.log('%cEmail: sorsone.team@gmail.com', 'color: #666;');
+console.log('%cEmail: contact@sorsone.com', 'color: #666;');
 console.log('%cPhone: +91 7907090396', 'color: #666;');
 console.log('%c━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'color: #D32F2F;');
+
+// ===== ADD NOTIFICATION ANIMATIONS =====
+
+// Add CSS for notification animations dynamically
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideIn {
+        from {
+            transform: translateX(400px);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes slideOut {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(400px);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(style);
