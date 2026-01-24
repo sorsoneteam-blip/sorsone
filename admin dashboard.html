@@ -3,26 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Admin Dashboard - Sorsone">
-    <title>Admin Dashboard - Sorsone</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Sorsone Admin Dashboard</title>
+    <link rel="icon" type="image/jpeg" href="images/favicon.jpg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary-red: #D32F2F;
-            --dark-bg: #1a1a1a;
-            --text-dark: #2c3e50;
-            --text-light: #6c757d;
-            --border-color: #e0e0e0;
-            --success-green: #28a745;
-            --warning-orange: #ffc107;
-            --info-blue: #17a2b8;
-            --font-display: 'Bebas Neue', sans-serif;
-            --font-body: 'Work Sans', sans-serif;
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -30,102 +14,76 @@
         }
 
         body {
-            font-family: var(--font-body);
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-        }
-
-        .admin-container {
-            display: grid;
-            grid-template-columns: 250px 1fr;
-            min-height: 100vh;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            background: var(--dark-bg);
-            color: white;
-            padding: 2rem 0;
-            position: fixed;
-            width: 250px;
-            height: 100vh;
-            overflow-y: auto;
-        }
-
-        .sidebar-header {
-            padding: 0 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .sidebar-header h1 {
-            font-family: var(--font-display);
-            font-size: 2rem;
-            letter-spacing: 2px;
-            color: var(--primary-red);
-        }
-
-        .sidebar-header p {
-            font-size: 0.85rem;
-            color: #aaa;
-        }
-
-        .sidebar-menu {
-            list-style: none;
-        }
-
-        .sidebar-menu li {
-            margin-bottom: 0.5rem;
-        }
-
-        .sidebar-menu a {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem 2rem;
-            color: #ccc;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .sidebar-menu a:hover,
-        .sidebar-menu a.active {
-            background: rgba(211, 47, 47, 0.2);
-            color: white;
-            border-left: 4px solid var(--primary-red);
-        }
-
-        .sidebar-menu i {
-            font-size: 1.2rem;
-            width: 20px;
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-left: 250px;
             padding: 2rem;
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .dashboard-header {
             background: white;
             padding: 2rem;
             border-radius: 12px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .dashboard-header h1 {
-            font-family: var(--font-display);
-            font-size: 2.5rem;
-            letter-spacing: 2px;
-            color: var(--dark-bg);
-            margin-bottom: 0.5rem;
+            font-size: 2rem;
+            color: #2d3748;
         }
 
         .dashboard-header p {
-            color: var(--text-light);
+            color: #718096;
+            margin-top: 0.5rem;
         }
 
-        /* Stats Cards */
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -137,845 +95,646 @@
             background: white;
             padding: 1.5rem;
             border-radius: 12px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .stat-card-header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 1.5rem;
-            transition: all 0.3s ease;
+            margin-bottom: 1rem;
         }
 
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
-        }
-
-        .stat-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
+        .stat-card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
         }
 
-        .stat-icon.orders {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .stat-card-icon.orders {
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
         }
 
-        .stat-icon.revenue {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        .stat-card-icon.revenue {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
             color: white;
         }
 
-        .stat-icon.customers {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        .stat-card-icon.customers {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
             color: white;
         }
 
-        .stat-icon.products {
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        .stat-card-icon.views {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
             color: white;
         }
 
-        .stat-info h3 {
+        .stat-value {
             font-size: 2rem;
             font-weight: 700;
-            color: var(--dark-bg);
+            color: #2d3748;
         }
 
-        .stat-info p {
-            color: var(--text-light);
+        .stat-label {
+            color: #718096;
             font-size: 0.9rem;
+            margin-top: 0.5rem;
         }
 
-        /* Orders Section */
-        .orders-section {
+        .data-section {
             background: white;
             padding: 2rem;
             border-radius: 12px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
         }
 
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        .section-header h2 {
-            font-family: var(--font-display);
-            font-size: 2rem;
-            letter-spacing: 2px;
-            color: var(--dark-bg);
-        }
-
-        .filter-buttons {
-            display: flex;
-            gap: 0.8rem;
-        }
-
-        .filter-btn {
-            padding: 0.6rem 1.2rem;
-            border: 2px solid var(--border-color);
-            background: white;
-            color: var(--text-dark);
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .filter-btn:hover,
-        .filter-btn.active {
-            background: var(--primary-red);
-            color: white;
-            border-color: var(--primary-red);
-        }
-
-        .search-box {
-            display: flex;
-            gap: 1rem;
             margin-bottom: 1.5rem;
         }
 
-        .search-box input {
-            flex: 1;
-            padding: 0.8rem 1rem;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            font-family: var(--font-body);
-            font-size: 1rem;
+        .section-header h2 {
+            font-size: 1.5rem;
+            color: #2d3748;
         }
 
-        .search-box button {
-            padding: 0.8rem 1.5rem;
-            background: var(--dark-bg);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .search-box button:hover {
-            background: #000;
-        }
-
-        .export-btn {
-            padding: 0.8rem 1.5rem;
-            background: var(--success-green);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
+        .tabs {
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .tab {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            font-weight: 600;
+            color: #718096;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
             transition: all 0.3s ease;
         }
 
-        .export-btn:hover {
-            background: #218838;
+        .tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
         }
 
-        /* Orders Table */
-        .orders-table {
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 1rem;
         }
 
-        .orders-table thead {
-            background: #f8f9fa;
-        }
-
-        .orders-table th {
+        th {
+            background: #f7fafc;
             padding: 1rem;
             text-align: left;
             font-weight: 600;
-            color: var(--dark-bg);
-            border-bottom: 2px solid var(--border-color);
+            color: #2d3748;
+            border-bottom: 2px solid #e2e8f0;
         }
 
-        .orders-table td {
+        td {
             padding: 1rem;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-dark);
+            border-bottom: 1px solid #e2e8f0;
+            color: #4a5568;
         }
 
-        .orders-table tr:hover {
-            background: #f8f9fa;
-        }
-
-        .order-id {
-            font-weight: 600;
-            color: var(--primary-red);
+        tr:hover {
+            background: #f7fafc;
         }
 
         .status-badge {
-            padding: 0.4rem 1rem;
+            padding: 0.3rem 0.8rem;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
-            display: inline-block;
         }
 
-        .status-badge.pending {
-            background: #fff3cd;
-            color: #856404;
+        .status-success {
+            background: #c6f6d5;
+            color: #22543d;
         }
 
-        .status-badge.processing {
-            background: #cce5ff;
-            color: #004085;
+        .status-pending {
+            background: #feebc8;
+            color: #7c2d12;
         }
 
-        .status-badge.shipped {
-            background: #d1ecf1;
-            color: #0c5460;
+        .status-failed {
+            background: #fed7d7;
+            color: #742a2a;
         }
 
-        .status-badge.delivered {
-            background: #d4edda;
-            color: #155724;
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: #718096;
         }
 
-        .action-btns {
-            display: flex;
-            gap: 0.5rem;
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
         }
 
-        .action-btn {
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .action-btn.view {
-            background: var(--info-blue);
-            color: white;
-        }
-
-        .action-btn.view:hover {
-            background: #138496;
-        }
-
-        .action-btn.delete {
-            background: var(--primary-red);
-            color: white;
-        }
-
-        .action-btn.delete:hover {
-            background: #b71c1c;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .empty-state {
             text-align: center;
-            padding: 4rem 2rem;
+            padding: 3rem;
+            color: #718096;
         }
 
         .empty-state i {
-            font-size: 5rem;
-            color: var(--border-color);
+            font-size: 4rem;
             margin-bottom: 1rem;
+            opacity: 0.3;
         }
 
-        .empty-state h3 {
-            font-family: var(--font-display);
-            font-size: 2rem;
-            color: var(--text-dark);
-            margin-bottom: 1rem;
-        }
-
-        .empty-state p {
-            color: var(--text-light);
-        }
-
-        /* Order Details Modal */
-        .modal {
+        .config-modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 10000;
-            overflow-y: auto;
-        }
-
-        .modal.show {
-            display: flex;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
             align-items: center;
             justify-content: center;
         }
 
+        .config-modal.active {
+            display: flex;
+        }
+
         .modal-content {
             background: white;
-            max-width: 800px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
+            padding: 2rem;
             border-radius: 12px;
-            position: relative;
-            margin: 2rem;
+            max-width: 500px;
+            width: 90%;
         }
 
-        .modal-header {
-            padding: 2rem;
-            border-bottom: 2px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            background: white;
-            z-index: 10;
+        .modal-content h3 {
+            margin-bottom: 1.5rem;
+            color: #2d3748;
         }
 
-        .modal-header h2 {
-            font-family: var(--font-display);
-            font-size: 2rem;
-            letter-spacing: 2px;
-            color: var(--dark-bg);
+        .form-group {
+            margin-bottom: 1.5rem;
         }
 
-        .close-modal {
-            font-size: 2rem;
-            cursor: pointer;
-            color: var(--text-light);
-            transition: all 0.3s ease;
-        }
-
-        .close-modal:hover {
-            color: var(--primary-red);
-        }
-
-        .modal-body {
-            padding: 2rem;
-        }
-
-        .detail-section {
-            margin-bottom: 2rem;
-        }
-
-        .detail-section h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--dark-bg);
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .detail-row {
-            display: grid;
-            grid-template-columns: 150px 1fr;
-            gap: 1rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .detail-label {
-            font-weight: 600;
-            color: var(--text-light);
-        }
-
-        .detail-value {
-            color: var(--text-dark);
-        }
-
-        .items-list {
-            list-style: none;
-        }
-
-        .item-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.8rem;
-            background: #f8f9fa;
-            border-radius: 6px;
+        .form-group label {
+            display: block;
             margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2d3748;
         }
 
-        @media (max-width: 1024px) {
-            .admin-container {
-                grid-template-columns: 1fr;
-            }
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
 
-            .sidebar {
-                position: relative;
-                width: 100%;
-                height: auto;
-            }
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
 
-            .main-content {
-                margin-left: 0;
+        @media (max-width: 768px) {
+            .dashboard-header {
+                flex-direction: column;
+                gap: 1rem;
             }
 
             .stats-grid {
                 grid-template-columns: 1fr;
             }
 
-            .filter-buttons {
+            .tabs {
                 flex-wrap: wrap;
             }
-        }
 
-        @media (max-width: 768px) {
-            .orders-table {
+            table {
                 font-size: 0.85rem;
-            }
-
-            .orders-table th,
-            .orders-table td {
-                padding: 0.6rem;
-            }
-
-            .action-btns {
-                flex-direction: column;
-            }
-
-            .search-box {
-                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
-    <div class="admin-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <h1>SORSONE</h1>
-                <p>Admin Dashboard</p>
+    <!-- Configuration Modal -->
+    <div class="config-modal" id="configModal">
+        <div class="modal-content">
+            <h3><i class="fas fa-cog"></i> Configure Backend URL</h3>
+            <div class="form-group">
+                <label>Google Apps Script Web App URL:</label>
+                <input type="text" id="backendUrlInput" placeholder="https://script.google.com/macros/s/...">
             </div>
-            <nav>
-                <ul class="sidebar-menu">
-                    <li><a href="#" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
-                    <li><a href="#" onclick="showSection('orders')"><i class="fas fa-shopping-bag"></i> Orders</a></li>
-                    <li><a href="#"><i class="fas fa-users"></i> Customers</a></li>
-                    <li><a href="#"><i class="fas fa-tshirt"></i> Products</a></li>
-                    <li><a href="#"><i class="fas fa-chart-line"></i> Analytics</a></li>
-                    <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
-                    <li><a href="index.html"><i class="fas fa-arrow-left"></i> Back to Store</a></li>
-                </ul>
-            </nav>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Dashboard Header -->
-            <div class="dashboard-header">
-                <h1>DASHBOARD</h1>
-                <p>Welcome back! Here's your business overview</p>
-                <p style="font-size: 0.85rem; color: #28a745; margin-top: 0.5rem;">
-                    <i class="fas fa-sync-alt"></i> Auto-refreshing every 30 seconds | Last updated: <span id="lastUpdated">Just now</span>
-                </p>
+            <div class="header-actions">
+                <button class="btn btn-primary" onclick="saveBackendUrl()">
+                    <i class="fas fa-save"></i> Save
+                </button>
+                <button class="btn btn-secondary" onclick="closeConfigModal()">
+                    Cancel
+                </button>
             </div>
-
-            <!-- Stats Cards -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon orders">
-                        <i class="fas fa-shopping-bag"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="totalOrders">0</h3>
-                        <p>Total Orders</p>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon revenue">
-                        <i class="fas fa-rupee-sign"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="totalRevenue">₹0</h3>
-                        <p>Total Revenue</p>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon customers">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="totalCustomers">0</h3>
-                        <p>Total Customers</p>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon products">
-                        <i class="fas fa-tshirt"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="totalProducts">9</h3>
-                        <p>Products</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Orders Section -->
-            <div class="orders-section">
-                <div class="section-header">
-                    <h2>RECENT ORDERS</h2>
-                    <div class="filter-buttons">
-                        <button class="filter-btn active" onclick="filterOrders('all')">All</button>
-                        <button class="filter-btn" onclick="filterOrders('pending')">Pending</button>
-                        <button class="filter-btn" onclick="filterOrders('processing')">Processing</button>
-                        <button class="filter-btn" onclick="filterOrders('shipped')">Shipped</button>
-                        <button class="filter-btn" onclick="filterOrders('delivered')">Delivered</button>
-                    </div>
-                </div>
-
-                <div class="search-box">
-                    <input type="text" id="searchInput" placeholder="Search by Order ID, Customer Name, Email, or Phone...">
-                    <button onclick="searchOrders()"><i class="fas fa-search"></i> Search</button>
-                    <button class="export-btn" onclick="loadOrders()" style="background: #17a2b8; margin-right: 0.5rem;">
-                        <i class="fas fa-sync-alt"></i> Refresh
-                    </button>
-                    <button class="export-btn" onclick="exportOrders()">
-                        <i class="fas fa-download"></i> Export CSV
-                    </button>
-                </div>
-
-                <div id="ordersTableContainer">
-                    <!-- Orders table will be inserted here -->
-                </div>
-            </div>
-        </main>
+        </div>
     </div>
 
-    <!-- Order Details Modal -->
-    <div class="modal" id="orderModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>ORDER DETAILS</h2>
-                <span class="close-modal" onclick="closeModal()">&times;</span>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <div class="dashboard-header">
+            <div>
+                <h1><i class="fas fa-chart-line"></i> Sorsone Admin Dashboard</h1>
+                <p>Real-time data from Google Sheets</p>
             </div>
-            <div class="modal-body" id="modalBody">
-                <!-- Order details will be inserted here -->
+            <div class="header-actions">
+                <button class="btn btn-primary" onclick="refreshData()">
+                    <i class="fas fa-sync-alt"></i> Refresh Data
+                </button>
+                <button class="btn btn-secondary" onclick="showConfigModal()">
+                    <i class="fas fa-cog"></i> Configure
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <div>
+                        <div class="stat-value" id="totalOrders">-</div>
+                        <div class="stat-label">Total Orders</div>
+                    </div>
+                    <div class="stat-card-icon orders">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <div>
+                        <div class="stat-value" id="totalRevenue">₹-</div>
+                        <div class="stat-label">Total Revenue</div>
+                    </div>
+                    <div class="stat-card-icon revenue">
+                        <i class="fas fa-rupee-sign"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <div>
+                        <div class="stat-value" id="totalCustomers">-</div>
+                        <div class="stat-label">Total Customers</div>
+                    </div>
+                    <div class="stat-card-icon customers">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <div>
+                        <div class="stat-value" id="pageViews">-</div>
+                        <div class="stat-label">Page Views</div>
+                    </div>
+                    <div class="stat-card-icon views">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Section -->
+        <div class="data-section">
+            <div class="section-header">
+                <h2>Data Overview</h2>
+            </div>
+            
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('customers')">
+                    <i class="fas fa-users"></i> Customers
+                </button>
+                <button class="tab" onclick="switchTab('payments')">
+                    <i class="fas fa-credit-card"></i> Payments
+                </button>
+                <button class="tab" onclick="switchTab('analytics')">
+                    <i class="fas fa-chart-bar"></i> Analytics
+                </button>
+            </div>
+
+            <!-- Customers Tab -->
+            <div class="tab-content" id="customersTab">
+                <div class="table-container">
+                    <table id="customersTable">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Location</th>
+                                <th>Items</th>
+                                <th>Amount</th>
+                                <th>Date & Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customersBody">
+                            <tr>
+                                <td colspan="8" class="loading">
+                                    <div class="spinner"></div>
+                                    Loading customers...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Payments Tab -->
+            <div class="tab-content" id="paymentsTab" style="display: none;">
+                <div class="table-container">
+                    <table id="paymentsTable">
+                        <thead>
+                            <tr>
+                                <th>Payment ID</th>
+                                <th>Order ID</th>
+                                <th>Razorpay ID</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Method</th>
+                                <th>Email</th>
+                                <th>Date & Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="paymentsBody">
+                            <tr>
+                                <td colspan="8" class="loading">
+                                    <div class="spinner"></div>
+                                    Loading payments...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Analytics Tab -->
+            <div class="tab-content" id="analyticsTab" style="display: none;">
+                <div class="table-container">
+                    <table id="analyticsTable">
+                        <thead>
+                            <tr>
+                                <th>Date & Time</th>
+                                <th>Page URL</th>
+                                <th>Views</th>
+                                <th>Device Type</th>
+                                <th>Browser</th>
+                                <th>Referrer</th>
+                            </tr>
+                        </thead>
+                        <tbody id="analyticsBody">
+                            <tr>
+                                <td colspan="6" class="loading">
+                                    <div class="spinner"></div>
+                                    Loading analytics...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Load and display orders
-        function loadOrders(filter = 'all', searchTerm = '') {
-            const orders = JSON.parse(localStorage.getItem('orders')) || [];
-            const container = document.getElementById('ordersTableContainer');
-            
-            // Update last updated timestamp
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
-            const lastUpdatedEl = document.getElementById('lastUpdated');
-            if (lastUpdatedEl) {
-                lastUpdatedEl.textContent = timeStr;
-            }
-            
-            // Update stats
-            document.getElementById('totalOrders').textContent = orders.length;
-            
-            const totalRevenue = orders.reduce((sum, order) => {
-                const amount = parseInt(order.payment.amount.replace(/[₹,]/g, ''));
-                return sum + amount;
-            }, 0);
-            document.getElementById('totalRevenue').textContent = `₹${totalRevenue.toLocaleString()}`;
-            
-            const uniqueCustomers = new Set(orders.map(order => order.customer.email));
-            document.getElementById('totalCustomers').textContent = uniqueCustomers.size;
+        let currentTab = 'customers';
+        let customersData = [];
+        let paymentsData = [];
+        let analyticsData = [];
 
-            // Filter orders
-            let filteredOrders = orders;
-            
-            if (filter !== 'all') {
-                filteredOrders = orders.filter(order => 
-                    (order.status || 'pending') === filter
-                );
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const backendUrl = localStorage.getItem('sorsoneBackendUrl');
+            if (!backendUrl) {
+                showConfigModal();
+            } else {
+                refreshData();
             }
+        });
 
-            if (searchTerm) {
-                const term = searchTerm.toLowerCase();
-                filteredOrders = filteredOrders.filter(order => 
-                    order.orderId.toLowerCase().includes(term) ||
-                    `${order.customer.firstName} ${order.customer.lastName}`.toLowerCase().includes(term) ||
-                    order.customer.email.toLowerCase().includes(term) ||
-                    order.customer.phone.includes(term)
-                );
+        function showConfigModal() {
+            const modal = document.getElementById('configModal');
+            const input = document.getElementById('backendUrlInput');
+            input.value = localStorage.getItem('sorsoneBackendUrl') || '';
+            modal.classList.add('active');
+        }
+
+        function closeConfigModal() {
+            document.getElementById('configModal').classList.remove('active');
+        }
+
+        function saveBackendUrl() {
+            const url = document.getElementById('backendUrlInput').value.trim();
+            if (!url) {
+                alert('Please enter a valid URL');
+                return;
             }
+            localStorage.setItem('sorsoneBackendUrl', url);
+            closeConfigModal();
+            refreshData();
+        }
 
-            if (filteredOrders.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-inbox"></i>
-                        <h3>No Orders Found</h3>
-                        <p>There are no orders matching your criteria.</p>
-                    </div>
-                `;
+        async function refreshData() {
+            const backendUrl = localStorage.getItem('sorsoneBackendUrl');
+            if (!backendUrl) {
+                alert('Please configure the backend URL first');
+                showConfigModal();
                 return;
             }
 
-            // Create table
-            let tableHTML = `
-                <table class="orders-table">
-                    <thead>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>Customer</th>
-                            <th>Contact</th>
-                            <th>Items</th>
-                            <th>Amount</th>
-                            <th>Payment</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
+            try {
+                // Fetch all data
+                const [customersResponse, paymentsResponse, analyticsResponse] = await Promise.all([
+                    fetch(`${backendUrl}?action=get_customers`),
+                    fetch(`${backendUrl}?action=get_payments`),
+                    fetch(`${backendUrl}?action=get_analytics`)
+                ]);
 
-            filteredOrders.reverse().forEach(order => {
-                const date = new Date(order.timestamp).toLocaleDateString('en-IN');
-                const status = order.status || 'pending';
-                const itemCount = order.items.reduce((sum, item) => sum + item.quantity, 0);
-                
-                tableHTML += `
+                const customersResult = await customersResponse.json();
+                const paymentsResult = await paymentsResponse.json();
+                const analyticsResult = await analyticsResponse.json();
+
+                if (customersResult.success) customersData = customersResult.data;
+                if (paymentsResult.success) paymentsData = paymentsResult.data;
+                if (analyticsResult.success) analyticsData = analyticsResult.data;
+
+                updateStats();
+                renderCurrentTab();
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                alert('Error fetching data. Please check your backend URL and try again.');
+            }
+        }
+
+        function updateStats() {
+            // Total Orders
+            document.getElementById('totalOrders').textContent = customersData.length;
+
+            // Total Revenue
+            const totalRevenue = customersData.reduce((sum, customer) => sum + (parseFloat(customer.totalAmount) || 0), 0);
+            document.getElementById('totalRevenue').textContent = '₹' + totalRevenue.toLocaleString('en-IN');
+
+            // Total Customers (unique emails)
+            const uniqueEmails = new Set(customersData.map(c => c.email));
+            document.getElementById('totalCustomers').textContent = uniqueEmails.size;
+
+            // Page Views
+            const totalViews = analyticsData.reduce((sum, analytic) => sum + (parseInt(analytic.pageViews) || 0), 0);
+            document.getElementById('pageViews').textContent = totalViews.toLocaleString('en-IN');
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            
+            // Update tab buttons
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.closest('.tab').classList.add('active');
+
+            // Show/hide content
+            document.getElementById('customersTab').style.display = tab === 'customers' ? 'block' : 'none';
+            document.getElementById('paymentsTab').style.display = tab === 'payments' ? 'block' : 'none';
+            document.getElementById('analyticsTab').style.display = tab === 'analytics' ? 'block' : 'none';
+
+            renderCurrentTab();
+        }
+
+        function renderCurrentTab() {
+            if (currentTab === 'customers') {
+                renderCustomers();
+            } else if (currentTab === 'payments') {
+                renderPayments();
+            } else if (currentTab === 'analytics') {
+                renderAnalytics();
+            }
+        }
+
+        function renderCustomers() {
+            const tbody = document.getElementById('customersBody');
+            
+            if (customersData.length === 0) {
+                tbody.innerHTML = `
                     <tr>
-                        <td class="order-id">${order.orderId}</td>
-                        <td>${order.customer.firstName} ${order.customer.lastName}</td>
-                        <td>
-                            <div>${order.customer.email}</div>
-                            <div>${order.customer.phone}</div>
-                        </td>
-                        <td>${itemCount} item${itemCount > 1 ? 's' : ''}</td>
-                        <td><strong>${order.payment.amount}</strong></td>
-                        <td>${order.payment.method.toUpperCase()}</td>
-                        <td>${date}</td>
-                        <td><span class="status-badge ${status}">${status.toUpperCase()}</span></td>
-                        <td>
-                            <div class="action-btns">
-                                <button class="action-btn view" onclick='viewOrder(${JSON.stringify(order).replace(/'/g, "&#39;")})'>
-                                    <i class="fas fa-eye"></i> View
-                                </button>
-                                <button class="action-btn delete" onclick="deleteOrder('${order.orderId}')">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
+                        <td colspan="8" class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <p>No customer data available</p>
                         </td>
                     </tr>
                 `;
-            });
+                return;
+            }
 
-            tableHTML += `
-                    </tbody>
-                </table>
-            `;
-
-            container.innerHTML = tableHTML;
+            tbody.innerHTML = customersData.map(customer => `
+                <tr>
+                    <td><strong>${customer.orderId}</strong></td>
+                    <td>${customer.fullName}</td>
+                    <td>${customer.email}</td>
+                    <td>${customer.phone}</td>
+                    <td>${customer.city}, ${customer.state}</td>
+                    <td>${customer.totalItems}</td>
+                    <td><strong>₹${parseFloat(customer.totalAmount).toLocaleString('en-IN')}</strong></td>
+                    <td>${customer.orderDateTime}</td>
+                </tr>
+            `).join('');
         }
 
-        // View order details
-        function viewOrder(order) {
-            const modal = document.getElementById('orderModal');
-            const modalBody = document.getElementById('modalBody');
+        function renderPayments() {
+            const tbody = document.getElementById('paymentsBody');
             
-            let itemsHTML = '';
-            order.items.forEach(item => {
-                itemsHTML += `
-                    <div class="item-row">
-                        <span>${item.name} (${item.color} - ${item.size}) x ${item.quantity}</span>
-                        <strong>₹${(item.price * item.quantity).toLocaleString()}</strong>
-                    </div>
+            if (paymentsData.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <p>No payment data available</p>
+                        </td>
+                    </tr>
                 `;
-            });
-
-            modalBody.innerHTML = `
-                <div class="detail-section">
-                    <h3>Order Information</h3>
-                    <div class="detail-row">
-                        <span class="detail-label">Order ID:</span>
-                        <span class="detail-value">${order.orderId}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Date:</span>
-                        <span class="detail-value">${new Date(order.timestamp).toLocaleString('en-IN')}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Status:</span>
-                        <span class="detail-value">
-                            <span class="status-badge ${order.status || 'pending'}">${(order.status || 'pending').toUpperCase()}</span>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="detail-section">
-                    <h3>Customer Details</h3>
-                    <div class="detail-row">
-                        <span class="detail-label">Name:</span>
-                        <span class="detail-value">${order.customer.firstName} ${order.customer.lastName}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Email:</span>
-                        <span class="detail-value">${order.customer.email}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Phone:</span>
-                        <span class="detail-value">${order.customer.phone}</span>
-                    </div>
-                </div>
-
-                <div class="detail-section">
-                    <h3>Shipping Address</h3>
-                    <div class="detail-row">
-                        <span class="detail-label">Address:</span>
-                        <span class="detail-value">${order.shipping.address}${order.shipping.apartment ? ', ' + order.shipping.apartment : ''}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">City:</span>
-                        <span class="detail-value">${order.shipping.city}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">State:</span>
-                        <span class="detail-value">${order.shipping.state}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Pincode:</span>
-                        <span class="detail-value">${order.shipping.pincode}</span>
-                    </div>
-                </div>
-
-                <div class="detail-section">
-                    <h3>Order Items</h3>
-                    ${itemsHTML}
-                </div>
-
-                <div class="detail-section">
-                    <h3>Payment Details</h3>
-                    <div class="detail-row">
-                        <span class="detail-label">Method:</span>
-                        <span class="detail-value">${order.payment.method.toUpperCase()}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Total Amount:</span>
-                        <span class="detail-value"><strong>${order.payment.amount}</strong></span>
-                    </div>
-                </div>
-
-                ${order.notes ? `
-                <div class="detail-section">
-                    <h3>Order Notes</h3>
-                    <p>${order.notes}</p>
-                </div>
-                ` : ''}
-            `;
-
-            modal.classList.add('show');
-        }
-
-        // Close modal
-        function closeModal() {
-            document.getElementById('orderModal').classList.remove('show');
-        }
-
-        // Filter orders
-        function filterOrders(status) {
-            const buttons = document.querySelectorAll('.filter-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            loadOrders(status);
-        }
-
-        // Search orders
-        function searchOrders() {
-            const searchTerm = document.getElementById('searchInput').value;
-            loadOrders('all', searchTerm);
-        }
-
-        // Delete order
-        function deleteOrder(orderId) {
-            if (!confirm('Are you sure you want to delete this order?')) {
                 return;
             }
 
-            let orders = JSON.parse(localStorage.getItem('orders')) || [];
-            orders = orders.filter(order => order.orderId !== orderId);
-            localStorage.setItem('orders', JSON.stringify(orders));
-            
-            loadOrders();
-            alert('Order deleted successfully');
-        }
-
-        // Export orders to CSV
-        function exportOrders() {
-            const orders = JSON.parse(localStorage.getItem('orders')) || [];
-            
-            if (orders.length === 0) {
-                alert('No orders to export');
-                return;
-            }
-
-            let csv = 'Order ID,Date,Customer Name,Email,Phone,Address,City,State,Pincode,Items,Total Amount,Payment Method,Status,Notes\n';
-            
-            orders.forEach(order => {
-                const items = order.items.map(item => `${item.name} (${item.color} ${item.size}) x${item.quantity}`).join('; ');
-                const address = `${order.shipping.address} ${order.shipping.apartment || ''}`;
+            tbody.innerHTML = paymentsData.map(payment => {
+                const statusClass = payment.status === 'success' ? 'status-success' : 
+                                   payment.status === 'pending' ? 'status-pending' : 'status-failed';
                 
-                csv += `${order.orderId},`;
-                csv += `${new Date(order.timestamp).toLocaleString('en-IN')},`;
-                csv += `"${order.customer.firstName} ${order.customer.lastName}",`;
-                csv += `${order.customer.email},`;
-                csv += `${order.customer.phone},`;
-                csv += `"${address}",`;
-                csv += `${order.shipping.city},`;
-                csv += `${order.shipping.state},`;
-                csv += `${order.shipping.pincode},`;
-                csv += `"${items}",`;
-                csv += `${order.payment.amount},`;
-                csv += `${order.payment.method},`;
-                csv += `${order.status || 'pending'},`;
-                csv += `"${order.notes || ''}"\n`;
-            });
-
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `sorsone-orders-${Date.now()}.csv`;
-            a.click();
-            window.URL.revokeObjectURL(url);
+                return `
+                    <tr>
+                        <td><strong>${payment.paymentId}</strong></td>
+                        <td>${payment.orderId}</td>
+                        <td><code>${payment.razorpayPaymentId}</code></td>
+                        <td><strong>₹${parseFloat(payment.amount).toLocaleString('en-IN')}</strong></td>
+                        <td><span class="status-badge ${statusClass}">${payment.status}</span></td>
+                        <td>${payment.method}</td>
+                        <td>${payment.email}</td>
+                        <td>${payment.paymentDateTime}</td>
+                    </tr>
+                `;
+            }).join('');
         }
 
-        // Initialize dashboard
-        window.addEventListener('load', () => {
-            loadOrders();
+        function renderAnalytics() {
+            const tbody = document.getElementById('analyticsBody');
             
-            // Auto-refresh orders every 30 seconds to show new orders
-            setInterval(() => {
-                const currentFilter = document.querySelector('.filter-btn.active');
-                const filterStatus = currentFilter ? currentFilter.textContent.toLowerCase() : 'all';
-                loadOrders(filterStatus);
-            }, 30000); // Refresh every 30 seconds
-        });
-
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('orderModal');
-            if (event.target === modal) {
-                closeModal();
+            if (analyticsData.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <p>No analytics data available</p>
+                        </td>
+                    </tr>
+                `;
+                return;
             }
+
+            tbody.innerHTML = analyticsData.map(analytic => `
+                <tr>
+                    <td>${analytic.dateTime}</td>
+                    <td><code>${analytic.pageUrl}</code></td>
+                    <td>${analytic.pageViews}</td>
+                    <td>${analytic.deviceType}</td>
+                    <td>${analytic.browser}</td>
+                    <td>${analytic.referrer}</td>
+                </tr>
+            `).join('');
         }
     </script>
 </body>
