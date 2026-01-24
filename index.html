@@ -6,6 +6,7 @@
     <meta name="description" content="Sorsone - Premium oversized t-shirts in 9 vibrant colors. Shop comfortable, stylish streetwear tees.">
     <meta name="keywords" content="oversized t-shirts, streetwear, premium tees, Sorsone, comfortable clothing">
     <title>Sorsone - Premium Oversized T-Shirts | 9 Colors Available</title>
+    <link rel="icon" type="image/jpeg" href="images/favicon.jpg">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -449,7 +450,53 @@
         </div>
     </footer>
 
+
+    <!-- Razorpay SDK -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    
     <!-- JavaScript -->
     <script src="script.js"></script>
+    
+    <!-- Analytics Tracking -->
+    <script>
+        // Track page view analytics
+        window.addEventListener('load', function() {
+            trackPageView();
+        });
+        
+        async function trackPageView() {
+            try {
+                const analyticsData = {
+                    action: 'track_analytics',
+                    pageUrl: window.location.href,
+                    pageViews: 1,
+                    deviceType: /Mobile|Android|iPhone/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop',
+                    browser: getBrowserName(),
+                    referrer: document.referrer || 'Direct'
+                };
+                
+                // Send to backend (replace with your deployed Apps Script URL)
+                const backendUrl = localStorage.getItem('sorsoneBackendUrl');
+                if (backendUrl) {
+                    await fetch(backendUrl, {
+                        method: 'POST',
+                        body: JSON.stringify(analyticsData),
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                }
+            } catch (error) {
+                console.log('Analytics tracking error:', error);
+            }
+        }
+        
+        function getBrowserName() {
+            const userAgent = navigator.userAgent;
+            if (userAgent.indexOf('Firefox') > -1) return 'Firefox';
+            if (userAgent.indexOf('Chrome') > -1) return 'Chrome';
+            if (userAgent.indexOf('Safari') > -1) return 'Safari';
+            if (userAgent.indexOf('Edge') > -1) return 'Edge';
+            return 'Other';
+        }
+    </script>
 </body>
 </html>
