@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Sorsone</title>
+    <link rel="icon" type="image/jpeg" href="images/favicon.jpg">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .checkout-page {
+            margin-top: 130px;
+            min-height: calc(100vh - 130px);
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        }
+        
+        .checkout-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .checkout-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .checkout-header h1 {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            letter-spacing: 3px;
+            color: var(--dark-bg);
+            margin-bottom: 0.5rem;
+        }
+        
+        .checkout-header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+        
+        .checkout-progress {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: white;
+            border-radius: 50px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .progress-step.active {
+            background: linear-gradient(135deg, var(--primary-red), #b71c1c);
+            color: white;
+        }
+        
+        .progress-step.completed {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        
+        .checkout-content {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+        
+        .checkout-form {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .form-section {
+            margin-bottom: 2.5rem;
+        }
+        
+        .form-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .form-section h3 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            color: var(--dark-bg);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .form-section h3 i {
+            color: var(--primary-red);
+            font-size: 1.5rem;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .form-row.single {
+            grid-template-columns: 1fr;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+        
+        .form-group label .required {
+            color: var(--primary-red);
+            margin-left: 0.2rem;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.9rem 1.2rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .form-group input.error {
+            border-color: #dc3545;
+        }
+        
+        .error-message {
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        .order-summary {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 150px;
+        }
+        
+        .order-summary h3 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            color: var(--dark-bg);
+        }
+        
+        .order-items {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 1.5rem;
+            padding-right: 0.5rem;
+        }
+        
+        .order-items::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .order-items::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .order-items::-webkit-scrollbar-thumb {
+            background: var(--primary-red);
+            border-radius: 10px;
+        }
+        
+        .order-item {
+            display: grid;
+            grid-template-columns: 60px 1fr auto;
+            gap: 1rem;
+            padding: 1rem;
+            border: 1px solid #f0f0f0;
+            border-radius: 8px;
+            margin-bottom: 0.8rem;
+        }
+        
+        .order-item-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #f5f5f5;
+        }
+        
+        .order-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .order-item-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        
+        .order-item-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--dark-bg);
+        }
+        
+        .order-item-meta {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+        
+        .order-item-price {
+            font-weight: 700;
+            color: var(--primary-red);
+            white-space: nowrap;
+        }
+        
+        .summary-divider {
+            border: none;
+            border-top: 2px solid #f0f0f0;
+            margin: 1.5rem 0;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            font-size: 0.95rem;
+        }
+        
+        .summary-row.total {
+            padding-top: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-red);
+            border-top: 2px solid #f0f0f0;
+            margin-top: 1rem;
+        }
+        
+        .savings-badge {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            text-align: center;
+            margin: 1rem 0;
+            font-weight: 600;
+        }
+        
+        .place-order-btn {
+            width: 100%;
+            padding: 1.3rem;
+            background: linear-gradient(135deg, var(--primary-red), #b71c1c);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+        
+        .place-order-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(211, 47, 47, 0.4);
+        }
+        
+        .place-order-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .secure-checkout {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .secure-checkout i {
+            color: #28a745;
+        }
+        
+        .back-to-cart {
+            display: block;
+            text-align: center;
+            margin-top: 1rem;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        
+        .back-to-cart:hover {
+            color: var(--primary-red);
+        }
+        
+        .payment-logos {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #f0f0f0;
+        }
+        
+        .payment-logos img {
+            height: 30px;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+        
+        .payment-logos img:hover {
+            opacity: 1;
+        }
+        
+        .empty-cart-message {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .empty-cart-message i {
+            font-size: 5rem;
+            color: #ddd;
+            margin-bottom: 2rem;
+        }
+        
+        .empty-cart-message h2 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            color: var(--dark-bg);
+        }
+        
+        @media (max-width: 968px) {
+            .checkout-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .order-summary {
+                position: static;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .checkout-header h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Republic Day Banner -->
+    <div class="republic-day-banner">
+        <div class="flag-stripe saffron"></div>
+        <div class="flag-stripe white">
+            <div class="ashoka-chakra"></div>
+        </div>
+        <div class="flag-stripe green"></div>
+        <div class="banner-content">
+            <div class="banner-text">
+                <span class="banner-icon">🇮🇳</span>
+                <span class="banner-main">REPUBLIC DAY SPECIAL</span>
+                <span class="banner-separator">|</span>
+                <span class="banner-offer">Buy 1 @ ₹299 • Buy 2 @ ₹499 • Buy 3 @ ₹799</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html">HOME</a>
+                <a href="about.html">ABOUT</a>
+                <a href="index.html#products">SHOP</a>
+            </div>
+            <a href="index.html" class="logo">SORSONE</a>
+            <div class="nav-right">
+                <i class="fas fa-search nav-icon"></i>
+                <i class="fas fa-user nav-icon"></i>
+                <div class="cart-wrapper">
+                    <i class="fas fa-shopping-bag nav-icon"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+                <i class="fas fa-bars nav-icon"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Checkout Page -->
+    <div class="checkout-page">
+        <div class="checkout-container">
+            <div class="checkout-header">
+                <h1>CHECKOUT</h1>
+                <p>Complete your order securely</p>
+            </div>
+
+            <!-- Progress Steps -->
+            <div class="checkout-progress">
+                <div class="progress-step completed">
+                    <div class="step-number">1</div>
+                    <span>Cart</span>
+                </div>
+                <div class="progress-step active">
+                    <div class="step-number">2</div>
+                    <span>Checkout</span>
+                </div>
+                <div class="progress-step">
+                    <div class="step-number">3</div>
+                    <span>Payment</span>
+                </div>
+            </div>
+
+            <div id="checkoutContent"></div>
+        </div>
+    </div>
+
+    <!-- Razorpay SDK -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <!-- Checkout JavaScript -->
+    <script>
+        // Razorpay Live API Key
+        const RAZORPAY_KEY = 'rzp_live_S7dLsK39ZbKgt2';
+        
+        let cart = [];
+        let orderTotal = 0;
+        
+        // Load cart on page load
+        function loadCheckout() {
+            const savedCart = localStorage.getItem('sorsoneCart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+            }
+            
+            if (cart.length === 0) {
+                displayEmptyCart();
+            } else {
+                displayCheckoutForm();
+            }
+            
+            updateCartCount();
+        }
+        
+        function displayEmptyCart() {
+            document.getElementById('checkoutContent').innerHTML = `
+                <div class="empty-cart-message">
+                    <i class="fas fa-shopping-bag"></i>
+                    <h2>Your Cart is Empty</h2>
+                    <p style="color: var(--text-light); margin-bottom: 2rem;">Add some items before checking out!</p>
+                    <button onclick="window.location.href='index.html#products'" 
+                            style="padding: 1rem 2.5rem; background: var(--primary-red); color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer;">
+                        <i class="fas fa-shopping-bag"></i> Shop Now
+                    </button>
+                </div>
+            `;
+        }
+        
+        function displayCheckoutForm() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const { total, breakdown, savings } = calculateTotal(totalItems);
+            orderTotal = total;
+            
+            let orderItemsHTML = '';
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                orderItemsHTML += `
+                    <div class="order-item">
+                        <div class="order-item-image">
+                            <img src="${item.image}" alt="${item.colorName}" onerror="this.src='images/placeholder.jpg'">
+                        </div>
+                        <div class="order-item-details">
+                            <div class="order-item-name">${item.colorName}</div>
+                            <div class="order-item-meta">Size: ${item.size} | Qty: ${item.quantity}</div>
+                        </div>
+                        <div class="order-item-price">₹${itemTotal.toLocaleString('en-IN')}</div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('checkoutContent').innerHTML = `
+                <div class="checkout-content">
+                    <div class="checkout-form">
+                        <form id="checkoutForm">
+                            <!-- Contact Information -->
+                            <div class="form-section">
+                                <h3><i class="fas fa-user"></i> Contact Information</h3>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Full Name <span class="required">*</span></label>
+                                        <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                                        <span class="error-message" id="nameError">Please enter your name</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Phone Number <span class="required">*</span></label>
+                                        <input type="tel" id="phone" name="phone" required placeholder="10-digit mobile number" pattern="[0-9]{10}">
+                                        <span class="error-message" id="phoneError">Please enter a valid 10-digit phone number</span>
+                                    </div>
+                                </div>
+                                <div class="form-row single">
+                                    <div class="form-group">
+                                        <label>Email Address <span class="required">*</span></label>
+                                        <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                                        <span class="error-message" id="emailError">Please enter a valid email</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Shipping Address -->
+                            <div class="form-section">
+                                <h3><i class="fas fa-shipping-fast"></i> Shipping Address</h3>
+                                <div class="form-row single">
+                                    <div class="form-group">
+                                        <label>Address Line 1 <span class="required">*</span></label>
+                                        <input type="text" id="address1" name="address1" required placeholder="House No., Building Name">
+                                        <span class="error-message" id="address1Error">Please enter your address</span>
+                                    </div>
+                                </div>
+                                <div class="form-row single">
+                                    <div class="form-group">
+                                        <label>Address Line 2</label>
+                                        <input type="text" id="address2" name="address2" placeholder="Street, Area, Landmark (Optional)">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>City <span class="required">*</span></label>
+                                        <input type="text" id="city" name="city" required placeholder="City">
+                                        <span class="error-message" id="cityError">Please enter city</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>State <span class="required">*</span></label>
+                                        <select id="state" name="state" required>
+                                            <option value="">Select State</option>
+                                            <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                            <option value="Assam">Assam</option>
+                                            <option value="Bihar">Bihar</option>
+                                            <option value="Chhattisgarh">Chhattisgarh</option>
+                                            <option value="Goa">Goa</option>
+                                            <option value="Gujarat">Gujarat</option>
+                                            <option value="Haryana">Haryana</option>
+                                            <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                            <option value="Jharkhand">Jharkhand</option>
+                                            <option value="Karnataka">Karnataka</option>
+                                            <option value="Kerala">Kerala</option>
+                                            <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                            <option value="Maharashtra">Maharashtra</option>
+                                            <option value="Manipur">Manipur</option>
+                                            <option value="Meghalaya">Meghalaya</option>
+                                            <option value="Mizoram">Mizoram</option>
+                                            <option value="Nagaland">Nagaland</option>
+                                            <option value="Odisha">Odisha</option>
+                                            <option value="Punjab">Punjab</option>
+                                            <option value="Rajasthan">Rajasthan</option>
+                                            <option value="Sikkim">Sikkim</option>
+                                            <option value="Tamil Nadu">Tamil Nadu</option>
+                                            <option value="Telangana">Telangana</option>
+                                            <option value="Tripura">Tripura</option>
+                                            <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                            <option value="Uttarakhand">Uttarakhand</option>
+                                            <option value="West Bengal">West Bengal</option>
+                                            <option value="Delhi">Delhi</option>
+                                        </select>
+                                        <span class="error-message" id="stateError">Please select state</span>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>PIN Code <span class="required">*</span></label>
+                                        <input type="text" id="pincode" name="pincode" required placeholder="6-digit PIN code" pattern="[0-9]{6}">
+                                        <span class="error-message" id="pincodeError">Please enter a valid 6-digit PIN code</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Country</label>
+                                        <input type="text" value="India" readonly style="background: #f5f5f5;">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Additional Notes -->
+                            <div class="form-section">
+                                <h3><i class="fas fa-comment"></i> Order Notes (Optional)</h3>
+                                <div class="form-row single">
+                                    <div class="form-group">
+                                        <textarea id="notes" name="notes" placeholder="Any special instructions for delivery..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Order Summary -->
+                    <div class="order-summary">
+                        <h3>ORDER SUMMARY</h3>
+                        <div class="order-items">
+                            ${orderItemsHTML}
+                        </div>
+                        
+                        <hr class="summary-divider">
+                        
+                        <div class="summary-row">
+                            <span>Total Items:</span>
+                            <span>${totalItems}</span>
+                        </div>
+                        
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span>₹${total.toLocaleString('en-IN')}</span>
+                        </div>
+                        
+                        <div class="summary-row">
+                            <span>Shipping:</span>
+                            <span style="color: #28a745; font-weight: 600;">FREE</span>
+                        </div>
+                        
+                        <div class="savings-badge">
+                            💰 You Save: ₹${savings.toLocaleString('en-IN')} (${Math.round((savings / (totalItems * 1299)) * 100)}% OFF)
+                        </div>
+                        
+                        <div class="summary-row total">
+                            <span>TOTAL:</span>
+                            <span>₹${total.toLocaleString('en-IN')}</span>
+                        </div>
+                        
+                        <button class="place-order-btn" onclick="initiatePayment()">
+                            <i class="fas fa-lock"></i> Pay ₹${total.toLocaleString('en-IN')}
+                        </button>
+                        
+                        <div class="secure-checkout">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Secure Checkout</span>
+                        </div>
+                        
+                        <a href="add-to-cart.html" class="back-to-cart">
+                            <i class="fas fa-arrow-left"></i> Back to Cart
+                        </a>
+                        
+                        <div class="payment-logos">
+                            <span style="color: #666; font-size: 0.85rem;">Powered by</span>
+                            <img src="https://razorpay.com/assets/razorpay-glyph.svg" alt="Razorpay">
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function calculateTotal(totalItems) {
+            const triplePacks = Math.floor(totalItems / 3);
+            const remainder = totalItems % 3;
+            
+            let total = triplePacks * 799;
+            
+            if (remainder === 2) {
+                total += 499;
+            } else if (remainder === 1) {
+                total += 299;
+            }
+            
+            const originalTotal = totalItems * 1299;
+            const savings = originalTotal - total;
+            
+            const breakdown = `${triplePacks} x Triple Pack + ${remainder} item(s)`;
+            
+            return { total, breakdown, savings };
+        }
+        
+        function validateForm() {
+            let isValid = true;
+            
+            // Name validation
+            const name = document.getElementById('name').value.trim();
+            if (name.length < 3) {
+                showError('nameError', 'name');
+                isValid = false;
+            } else {
+                hideError('nameError', 'name');
+            }
+            
+            // Phone validation
+            const phone = document.getElementById('phone').value.trim();
+            if (!/^[0-9]{10}$/.test(phone)) {
+                showError('phoneError', 'phone');
+                isValid = false;
+            } else {
+                hideError('phoneError', 'phone');
+            }
+            
+            // Email validation
+            const email = document.getElementById('email').value.trim();
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showError('emailError', 'email');
+                isValid = false;
+            } else {
+                hideError('emailError', 'email');
+            }
+            
+            // Address validation
+            const address1 = document.getElementById('address1').value.trim();
+            if (address1.length < 5) {
+                showError('address1Error', 'address1');
+                isValid = false;
+            } else {
+                hideError('address1Error', 'address1');
+            }
+            
+            // City validation
+            const city = document.getElementById('city').value.trim();
+            if (city.length < 2) {
+                showError('cityError', 'city');
+                isValid = false;
+            } else {
+                hideError('cityError', 'city');
+            }
+            
+            // State validation
+            const state = document.getElementById('state').value;
+            if (!state) {
+                showError('stateError', 'state');
+                isValid = false;
+            } else {
+                hideError('stateError', 'state');
+            }
+            
+            // PIN code validation
+            const pincode = document.getElementById('pincode').value.trim();
+            if (!/^[0-9]{6}$/.test(pincode)) {
+                showError('pincodeError', 'pincode');
+                isValid = false;
+            } else {
+                hideError('pincodeError', 'pincode');
+            }
+            
+            return isValid;
+        }
+        
+        function showError(errorId, inputId) {
+            document.getElementById(errorId).classList.add('show');
+            document.getElementById(inputId).classList.add('error');
+        }
+        
+        function hideError(errorId, inputId) {
+            document.getElementById(errorId).classList.remove('show');
+            document.getElementById(inputId).classList.remove('error');
+        }
+        
+        function initiatePayment() {
+            // Validate form
+            if (!validateForm()) {
+                alert('⚠️ Please fill all required fields correctly');
+                return;
+            }
+            
+            // Get customer details
+            const customerData = {
+                name: document.getElementById('name').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                address: {
+                    line1: document.getElementById('address1').value.trim(),
+                    line2: document.getElementById('address2').value.trim(),
+                    city: document.getElementById('city').value.trim(),
+                    state: document.getElementById('state').value,
+                    pincode: document.getElementById('pincode').value.trim(),
+                    country: 'India'
+                },
+                notes: document.getElementById('notes').value.trim()
+            };
+            
+            // Generate unique order ID
+            const orderId = 'ORD' + Date.now();
+            
+            // Razorpay options
+            const options = {
+                key: RAZORPAY_KEY,
+                amount: orderTotal * 100, // Amount in paise
+                currency: 'INR',
+                name: 'Sorsone',
+                description: 'Premium Oversized T-Shirts',
+                image: 'images/favicon.jpg',
+                order_id: '', // Leave empty for now, you can generate from backend
+                prefill: {
+                    name: customerData.name,
+                    email: customerData.email,
+                    contact: customerData.phone
+                },
+                notes: {
+                    address: `${customerData.address.line1}, ${customerData.address.line2}, ${customerData.address.city}, ${customerData.address.state} - ${customerData.address.pincode}`,
+                    order_notes: customerData.notes
+                },
+                theme: {
+                    color: '#D32F2F'
+                },
+                handler: function (response) {
+                    handlePaymentSuccess(response, customerData, orderId);
+                },
+                modal: {
+                    ondismiss: function() {
+                        console.log('Payment cancelled');
+                    }
+                }
+            };
+            
+            const rzp = new Razorpay(options);
+            
+            rzp.on('payment.failed', function (response) {
+                handlePaymentFailure(response);
+            });
+            
+            rzp.open();
+        }
+        
+        function handlePaymentSuccess(response, customerData, orderId) {
+            console.log('Payment Success:', response);
+            
+            // Save order details
+            const orderDetails = {
+                orderId: orderId,
+                razorpayPaymentId: response.razorpay_payment_id,
+                razorpayOrderId: response.razorpay_order_id,
+                razorpaySignature: response.razorpay_signature,
+                customer: customerData,
+                items: cart,
+                total: orderTotal,
+                orderDate: new Date().toISOString(),
+                status: 'Paid'
+            };
+            
+            // Save to localStorage (you can also send to backend)
+            localStorage.setItem('lastOrder', JSON.stringify(orderDetails));
+            
+            // Clear cart
+            localStorage.removeItem('sorsoneCart');
+            
+            // Show success message
+            showSuccessMessage(orderDetails);
+        }
+        
+        function handlePaymentFailure(response) {
+            console.error('Payment Failed:', response);
+            
+            alert(`❌ Payment Failed!\n\nReason: ${response.error.description}\nError Code: ${response.error.code}\n\nPlease try again or contact support.`);
+        }
+        
+        function showSuccessMessage(orderDetails) {
+            document.getElementById('checkoutContent').innerHTML = `
+                <div style="text-align: center; padding: 4rem 2rem; background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #28a745, #20c997); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem;">
+                        <i class="fas fa-check" style="font-size: 3rem; color: white;"></i>
+                    </div>
+                    <h1 style="font-family: var(--font-display); font-size: 3rem; letter-spacing: 2px; color: var(--dark-bg); margin-bottom: 1rem;">ORDER PLACED!</h1>
+                    <p style="font-size: 1.2rem; color: var(--text-light); margin-bottom: 2rem;">Thank you for your purchase!</p>
+                    
+                    <div style="background: #f8f9fa; padding: 2rem; border-radius: 12px; max-width: 500px; margin: 0 auto 2rem; text-align: left;">
+                        <h3 style="margin-bottom: 1rem; color: var(--dark-bg);">Order Details:</h3>
+                        <p><strong>Order ID:</strong> ${orderDetails.orderId}</p>
+                        <p><strong>Payment ID:</strong> ${orderDetails.razorpayPaymentId}</p>
+                        <p><strong>Amount Paid:</strong> ₹${orderDetails.total.toLocaleString('en-IN')}</p>
+                        <p><strong>Email:</strong> ${orderDetails.customer.email}</p>
+                        <p style="margin-top: 1rem; color: #28a745; font-weight: 600;">✓ Payment Successful</p>
+                    </div>
+                    
+                    <p style="color: var(--text-light); margin-bottom: 2rem;">A confirmation email has been sent to ${orderDetails.customer.email}<br>Your order will be delivered within 5-7 business days.</p>
+                    
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <button onclick="window.location.href='index.html'" style="padding: 1rem 2rem; background: var(--primary-red); color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer;">
+                            <i class="fas fa-home"></i> Back to Home
+                        </button>
+                        <button onclick="window.location.href='index.html#products'" style="padding: 1rem 2rem; background: #28a745; color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer;">
+                            <i class="fas fa-shopping-bag"></i> Continue Shopping
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const cartCountElements = document.querySelectorAll('#cartCount');
+            cartCountElements.forEach(el => {
+                el.textContent = totalItems;
+            });
+        }
+        
+        // Initialize checkout on page load
+        document.addEventListener('DOMContentLoaded', loadCheckout);
+    </script>
+</body>
+</html>
