@@ -1,28 +1,542 @@
-const loadingSpinner = document.getElementById('loadingSpinner');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Sorsone</title>
+    <link rel="icon" type="image/jpeg" href="images/favicon.jpg">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .checkout-page {
+            margin-top: 130px;
+            min-height: calc(100vh - 130px);
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        }
+        .checkout-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .checkout-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .checkout-header h1 {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            letter-spacing: 3px;
+            color: var(--dark-bg);
+            margin-bottom: 0.5rem;
+        }
+        .checkout-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            align-items: start;
+        }
+        .checkout-form {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .form-section {
+            margin-bottom: 2rem;
+        }
+        .form-section h3 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            color: var(--dark-bg);
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-red);
+        }
+        .form-group.error input,
+        .form-group.error select {
+            border-color: #d32f2f;
+        }
+        .error-message {
+            color: #d32f2f;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+        .form-group.error .error-message {
+            display: block;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .order-summary {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 150px;
+        }
+        .order-summary h3 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            color: var(--dark-bg);
+        }
+        .summary-items {
+            margin-bottom: 1.5rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .summary-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .summary-item-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #f5f5f5;
+        }
+        .summary-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .summary-item-details {
+            flex: 1;
+        }
+        .summary-item-name {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        .summary-item-info {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .summary-row:last-child {
+            border-bottom: none;
+            padding-top: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-red);
+        }
+        .payment-button {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+        }
+        .payment-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(40, 167, 69, 0.3);
+        }
+        .payment-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .loading-spinner {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .loading-spinner.active {
+            display: block;
+        }
+        .spinner {
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .secure-payment {
+            text-align: center;
+            margin-top: 1rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        @media (max-width: 968px) {
+            .checkout-content {
+                grid-template-columns: 1fr;
+            }
+            .order-summary {
+                position: static;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Republic Day Banner -->
+    <div class="republic-day-banner">
+        <div class="flag-stripe saffron"></div>
+        <div class="flag-stripe white">
+            <div class="ashoka-chakra"></div>
+        </div>
+        <div class="flag-stripe green"></div>
+        <div class="banner-content">
+            <div class="banner-text">
+                <span class="banner-icon">🇮🇳</span>
+                <span class="banner-main">REPUBLIC DAY SPECIAL</span>
+                <span class="banner-separator">|</span>
+                <span class="banner-offer">Buy 1 @ ₹299 • Buy 2 @ ₹499 • Buy 3 @ ₹799</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html">HOME</a>
+                <a href="about.html">ABOUT</a>
+                <a href="index.html#products">SHOP</a>
+            </div>
+            <a href="index.html" class="logo">SORSONE</a>
+            <div class="nav-right">
+                <i class="fas fa-search nav-icon"></i>
+                <i class="fas fa-user nav-icon"></i>
+                <div class="cart-wrapper">
+                    <i class="fas fa-shopping-bag nav-icon"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+                <i class="fas fa-bars nav-icon"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Checkout Page -->
+    <div class="checkout-page">
+        <div class="checkout-container">
+            <div class="checkout-header">
+                <h1>CHECKOUT</h1>
+                <p>Complete your order securely</p>
+            </div>
+
+            <div class="checkout-content">
+                <!-- Checkout Form -->
+                <div class="checkout-form">
+                    <form id="checkoutForm">
+                        <!-- Personal Information -->
+                        <div class="form-section">
+                            <h3>PERSONAL INFORMATION</h3>
+                            <div class="form-group">
+                                <label for="fullName">Full Name *</label>
+                                <input type="text" id="fullName" required>
+                                <span class="error-message">Please enter your full name</span>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">Email *</label>
+                                    <input type="email" id="email" required>
+                                    <span class="error-message">Please enter a valid email</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone *</label>
+                                    <input type="tel" id="phone" required pattern="[0-9]{10}">
+                                    <span class="error-message">Please enter a valid 10-digit phone number</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Shipping Address -->
+                        <div class="form-section">
+                            <h3>SHIPPING ADDRESS</h3>
+                            <div class="form-group">
+                                <label for="address1">Address Line 1 *</label>
+                                <input type="text" id="address1" required>
+                                <span class="error-message">Please enter your address</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="address2">Address Line 2 (Optional)</label>
+                                <input type="text" id="address2">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="city">City *</label>
+                                    <input type="text" id="city" required>
+                                    <span class="error-message">Please enter your city</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="state">State *</label>
+                                    <select id="state" required>
+                                        <option value="">Select State</option>
+                                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                        <option value="Assam">Assam</option>
+                                        <option value="Bihar">Bihar</option>
+                                        <option value="Chhattisgarh">Chhattisgarh</option>
+                                        <option value="Goa">Goa</option>
+                                        <option value="Gujarat">Gujarat</option>
+                                        <option value="Haryana">Haryana</option>
+                                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                        <option value="Jharkhand">Jharkhand</option>
+                                        <option value="Karnataka">Karnataka</option>
+                                        <option value="Kerala">Kerala</option>
+                                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                        <option value="Maharashtra">Maharashtra</option>
+                                        <option value="Manipur">Manipur</option>
+                                        <option value="Meghalaya">Meghalaya</option>
+                                        <option value="Mizoram">Mizoram</option>
+                                        <option value="Nagaland">Nagaland</option>
+                                        <option value="Odisha">Odisha</option>
+                                        <option value="Punjab">Punjab</option>
+                                        <option value="Rajasthan">Rajasthan</option>
+                                        <option value="Sikkim">Sikkim</option>
+                                        <option value="Tamil Nadu">Tamil Nadu</option>
+                                        <option value="Telangana">Telangana</option>
+                                        <option value="Tripura">Tripura</option>
+                                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                        <option value="Uttarakhand">Uttarakhand</option>
+                                        <option value="West Bengal">West Bengal</option>
+                                    </select>
+                                    <span class="error-message">Please select your state</span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="pincode">Pincode *</label>
+                                    <input type="text" id="pincode" required pattern="[0-9]{6}">
+                                    <span class="error-message">Please enter a valid 6-digit pincode</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="country">Country *</label>
+                                    <input type="text" id="country" value="India" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Additional Information -->
+                        <div class="form-section">
+                            <h3>ADDITIONAL INFORMATION</h3>
+                            <div class="form-group">
+                                <label for="instructions">Delivery Instructions (Optional)</label>
+                                <textarea id="instructions" rows="3" placeholder="Any special delivery instructions..."></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="order-summary">
+                    <h3>ORDER SUMMARY</h3>
+                    <div class="summary-items" id="summaryItems"></div>
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">₹0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping:</span>
+                        <span style="color: #28a745; font-weight: 600;">FREE</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>TOTAL:</span>
+                        <span id="total">₹0</span>
+                    </div>
+                    <button class="payment-button" id="paymentButton" onclick="handlePayment()">
+                        <span id="buttonText"><i class="fas fa-lock"></i> PAY NOW</span>
+                        <div class="loading-spinner" id="loadingSpinner">
+                            <div class="spinner"></div>
+                        </div>
+                    </button>
+                    <p class="secure-payment">
+                        <i class="fas fa-shield-alt"></i> Secure payment powered by Razorpay
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Razorpay SDK -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <!-- JavaScript -->
+    <script>
+        // ===== CONFIGURATION =====
+        const RAZORPAY_KEY_ID = 'rzp_test_VaDlK9Jk90FAgb';
+        const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbwJrvhyHLxjqcUFrM8yJiV-ksKJYSW8q41LL-vx9xBKrXAkFa8mGQl9SbdJrBH-ItMz/exec';
+
+        // Pricing based on quantity
+        const pricing = {
+            1: { original: 1299, offer: 299, discount: 77 },
+            2: { original: 2598, offer: 499, discount: 81 },
+            3: { original: 3897, offer: 799, discount: 79 }
+        };
+
+        let cart = [];
+
+        // ===== LOAD CART AND DISPLAY SUMMARY =====
+        function loadCartAndSummary() {
+            const savedCart = localStorage.getItem('sorsoneCart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+            }
+
+            if (cart.length === 0) {
+                window.location.href = 'index.html#products';
+                return;
+            }
+
+            displayOrderSummary();
+            updateCartCount();
+        }
+
+        function displayOrderSummary() {
+            const summaryItems = document.getElementById('summaryItems');
+            const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            // Calculate pricing
+            const triplePacks = Math.floor(totalQuantity / 3);
+            const remainder = totalQuantity % 3;
+            
+            let total = triplePacks * pricing[3].offer;
+            if (remainder === 2) total += pricing[2].offer;
+            else if (remainder === 1) total += pricing[1].offer;
+
+            // Display items
+            summaryItems.innerHTML = cart.map(item => `
+                <div class="summary-item">
+                    <div class="summary-item-image">
+                        <img src="${item.image}" alt="${item.colorName}">
+                    </div>
+                    <div class="summary-item-details">
+                        <div class="summary-item-name">${item.colorName}</div>
+                        <div class="summary-item-info">Size: ${item.size} • Qty: ${item.quantity}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('subtotal').textContent = `₹${total.toLocaleString('en-IN')}`;
+            document.getElementById('total').textContent = `₹${total.toLocaleString('en-IN')}`;
+        }
+
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = totalItems;
+        }
+
+        // ===== FORM VALIDATION =====
+        function validateForm() {
+            const form = document.getElementById('checkoutForm');
+            const inputs = form.querySelectorAll('input[required], select[required]');
+            let isValid = true;
+
+            inputs.forEach(input => {
+                const formGroup = input.closest('.form-group');
+                formGroup.classList.remove('error');
+
+                if (!input.value.trim()) {
+                    formGroup.classList.add('error');
+                    isValid = false;
+                } else if (input.type === 'email') {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(input.value)) {
+                        formGroup.classList.add('error');
+                        isValid = false;
+                    }
+                } else if (input.id === 'phone') {
+                    if (!/^[0-9]{10}$/.test(input.value)) {
+                        formGroup.classList.add('error');
+                        isValid = false;
+                    }
+                } else if (input.id === 'pincode') {
+                    if (!/^[0-9]{6}$/.test(input.value)) {
+                        formGroup.classList.add('error');
+                        isValid = false;
+                    }
+                }
+            });
+
+            return isValid;
+        }
+
+        // ===== HANDLE PAYMENT =====
+        async function handlePayment() {
+            if (!validateForm()) {
+                alert('Please fill in all required fields correctly.');
+                return;
+            }
+
+            const paymentButton = document.getElementById('paymentButton');
+            const buttonText = document.getElementById('buttonText');
+            const loadingSpinner = document.getElementById('loadingSpinner');
 
             paymentButton.disabled = true;
+            buttonText.style.opacity = '0';
             loadingSpinner.classList.add('active');
 
             try {
-                // Get form data
                 const formData = getFormData();
-                
-                // Create order in backend
                 const orderData = await createOrder(formData);
-                
-                console.log('Order created:', orderData);
                 
                 if (!orderData.success) {
                     throw new Error(orderData.error || 'Failed to create order');
                 }
 
-                // Initialize Razorpay payment
                 initiateRazorpayPayment(orderData, formData);
 
             } catch (error) {
                 console.error('Payment error:', error);
-                showAlert('Payment initialization failed. Please try again. Error: ' + error.message, 'error');
+                alert('Payment initialization failed. Please try again. Error: ' + error.message);
                 paymentButton.disabled = false;
+                buttonText.style.opacity = '1';
                 loadingSpinner.classList.remove('active');
             }
         }
@@ -30,7 +544,12 @@ const loadingSpinner = document.getElementById('loadingSpinner');
         // ===== GET FORM DATA =====
         function getFormData() {
             const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
-            const priceData = pricing[totalQuantity] || pricing[3];
+            const triplePacks = Math.floor(totalQuantity / 3);
+            const remainder = totalQuantity % 3;
+            
+            let total = triplePacks * pricing[3].offer;
+            if (remainder === 2) total += pricing[2].offer;
+            else if (remainder === 1) total += pricing[1].offer;
 
             return {
                 fullName: document.getElementById('fullName').value.trim(),
@@ -45,19 +564,17 @@ const loadingSpinner = document.getElementById('loadingSpinner');
                 instructions: document.getElementById('instructions').value.trim(),
                 items: cart,
                 totalItems: totalQuantity,
-                totalAmount: priceData.offer
+                totalAmount: total
             };
         }
 
         // ===== CREATE ORDER IN BACKEND =====
         async function createOrder(formData) {
             try {
-                const response = await fetch(BACKEND_URL, {
+                await fetch(BACKEND_URL, {
                     method: 'POST',
                     mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         action: 'create_order',
                         ...formData
@@ -89,17 +606,12 @@ const loadingSpinner = document.getElementById('loadingSpinner');
 
         // ===== INITIATE RAZORPAY PAYMENT =====
         function initiateRazorpayPayment(orderData, formData) {
-            console.log('Initiating Razorpay payment...');
-            
-            const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
-            const priceData = pricing[totalQuantity] || pricing[3];
-
             const options = {
                 key: RAZORPAY_KEY_ID,
-                amount: priceData.offer * 100,
+                amount: formData.totalAmount * 100,
                 currency: 'INR',
                 name: 'SORSONE',
-                description: `Order for ${totalQuantity} Premium T-Shirt${totalQuantity > 1 ? 's' : ''}`,
+                description: `Order for ${formData.totalItems} Premium T-Shirt${formData.totalItems > 1 ? 's' : ''}`,
                 image: 'images/favicon.jpg',
                 handler: function(response) {
                     handlePaymentSuccess(response, orderData, formData);
@@ -119,8 +631,10 @@ const loadingSpinner = document.getElementById('loadingSpinner');
                 modal: {
                     ondismiss: function() {
                         const paymentButton = document.getElementById('paymentButton');
+                        const buttonText = document.getElementById('buttonText');
                         const loadingSpinner = document.getElementById('loadingSpinner');
                         paymentButton.disabled = false;
+                        buttonText.style.opacity = '1';
                         loadingSpinner.classList.remove('active');
                     }
                 }
@@ -136,14 +650,21 @@ const loadingSpinner = document.getElementById('loadingSpinner');
                 rzp.open();
                 
                 setTimeout(() => {
-                    document.getElementById('loadingSpinner').classList.remove('active');
+                    const buttonText = document.getElementById('buttonText');
+                    const loadingSpinner = document.getElementById('loadingSpinner');
+                    buttonText.style.opacity = '1';
+                    loadingSpinner.classList.remove('active');
                 }, 500);
                 
             } catch (error) {
                 console.error('Razorpay error:', error);
-                showAlert('Failed to open payment window. Please try again.', 'error');
-                document.getElementById('paymentButton').disabled = false;
-                document.getElementById('loadingSpinner').classList.remove('active');
+                alert('Failed to open payment window. Please try again.');
+                const paymentButton = document.getElementById('paymentButton');
+                const buttonText = document.getElementById('buttonText');
+                const loadingSpinner = document.getElementById('loadingSpinner');
+                paymentButton.disabled = false;
+                buttonText.style.opacity = '1';
+                loadingSpinner.classList.remove('active');
             }
         }
 
@@ -155,9 +676,7 @@ const loadingSpinner = document.getElementById('loadingSpinner');
                 await fetch(BACKEND_URL, {
                     method: 'POST',
                     mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         action: 'save_customer',
                         orderId: orderData.orderId,
@@ -170,9 +689,7 @@ const loadingSpinner = document.getElementById('loadingSpinner');
                 await fetch(BACKEND_URL, {
                     method: 'POST',
                     mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         action: 'payment_webhook',
                         orderId: orderData.orderId,
@@ -189,7 +706,6 @@ const loadingSpinner = document.getElementById('loadingSpinner');
                 });
 
                 localStorage.removeItem('sorsoneCart');
-
                 window.location.href = `Paymentsuccess.html?order_id=${orderData.orderId}&payment_id=${razorpayResponse.razorpay_payment_id}`;
 
             } catch (error) {
@@ -202,9 +718,11 @@ const loadingSpinner = document.getElementById('loadingSpinner');
         // ===== HANDLE PAYMENT FAILURE =====
         function handlePaymentFailure(response) {
             const paymentButton = document.getElementById('paymentButton');
+            const buttonText = document.getElementById('buttonText');
             const loadingSpinner = document.getElementById('loadingSpinner');
             
             paymentButton.disabled = false;
+            buttonText.style.opacity = '1';
             loadingSpinner.classList.remove('active');
 
             console.error('Payment failed:', response.error);
@@ -214,8 +732,11 @@ const loadingSpinner = document.getElementById('loadingSpinner');
                 errorMessage += ' Error: ' + response.error.description;
             }
             
-            showAlert(errorMessage, 'error');
+            alert(errorMessage);
         }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', loadCartAndSummary);
     </script>
 </body>
 </html>
