@@ -39,11 +39,11 @@
         .checkout-form {
             background: white;
             border-radius: 16px;
-            padding: 2rem;
+            padding: 2.5rem;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
         .form-section {
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
         }
         .form-section h3 {
             font-family: var(--font-display);
@@ -51,50 +51,50 @@
             letter-spacing: 2px;
             margin-bottom: 1.5rem;
             color: var(--dark-bg);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
         .form-group label {
             display: block;
             font-weight: 600;
             margin-bottom: 0.5rem;
             color: var(--text-dark);
+            font-size: 0.9rem;
+        }
+        .required {
+            color: var(--primary-red);
         }
         .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 0.75rem 1rem;
+            padding: 0.9rem 1.2rem;
             border: 2px solid #e0e0e0;
             border-radius: 8px;
             font-family: var(--font-body);
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
         }
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
             border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
         }
-        .form-group.error input,
-        .form-group.error select {
-            border-color: #d32f2f;
-        }
-        .error-message {
-            color: #d32f2f;
-            font-size: 0.85rem;
-            margin-top: 0.3rem;
-            display: none;
-        }
-        .form-group.error .error-message {
-            display: block;
-        }
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
         }
         .order-summary {
             background: white;
@@ -104,7 +104,7 @@
             position: sticky;
             top: 150px;
         }
-        .order-summary h3 {
+        .summary-header {
             font-family: var(--font-display);
             font-size: 1.8rem;
             letter-spacing: 2px;
@@ -120,30 +120,37 @@
             display: flex;
             gap: 1rem;
             padding: 1rem;
-            border-bottom: 1px solid #f0f0f0;
+            border: 1px solid #f0f0f0;
+            border-radius: 8px;
+            margin-bottom: 0.8rem;
         }
-        .summary-item-image {
+        .item-image {
             width: 60px;
             height: 60px;
-            border-radius: 8px;
+            border-radius: 6px;
             overflow: hidden;
-            background: #f5f5f5;
+            flex-shrink: 0;
         }
-        .summary-item-image img {
+        .item-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        .summary-item-details {
+        .item-details {
             flex: 1;
         }
-        .summary-item-name {
+        .item-name {
             font-weight: 600;
+            font-size: 0.95rem;
             margin-bottom: 0.3rem;
         }
-        .summary-item-info {
+        .item-specs {
             font-size: 0.85rem;
             color: var(--text-light);
+        }
+        .item-price {
+            font-weight: 700;
+            color: var(--primary-red);
         }
         .summary-row {
             display: flex;
@@ -158,9 +165,16 @@
             font-weight: 700;
             color: var(--primary-red);
         }
+        .pricing-breakdown {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
         .payment-button {
             width: 100%;
-            padding: 1.2rem;
+            padding: 1.3rem;
             background: linear-gradient(135deg, #28a745, #20c997);
             color: white;
             border: none;
@@ -185,31 +199,53 @@
         .loading-spinner {
             display: none;
             position: absolute;
+            right: 1.5rem;
             top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translateY(-50%);
         }
         .loading-spinner.active {
-            display: block;
+            display: inline-block;
         }
         .spinner {
+            width: 20px;
+            height: 20px;
             border: 3px solid rgba(255,255,255,0.3);
-            border-top: 3px solid white;
+            border-top-color: white;
             border-radius: 50%;
-            width: 24px;
-            height: 24px;
             animation: spin 0.8s linear infinite;
         }
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            to { transform: rotate(360deg); }
         }
-        .secure-payment {
-            text-align: center;
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
             margin-top: 1rem;
             color: var(--text-light);
             font-size: 0.9rem;
         }
+        .alert {
+            padding: 1rem 1.2rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+        .alert.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .alert.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .alert.active {
+            display: block;
+        }
+        
         @media (max-width: 968px) {
             .checkout-content {
                 grid-template-columns: 1fr;
@@ -267,8 +303,10 @@
         <div class="checkout-container">
             <div class="checkout-header">
                 <h1>CHECKOUT</h1>
-                <p>Complete your order securely</p>
+                <p style="color: var(--text-light); font-size: 1.1rem;">Complete your order details</p>
             </div>
+
+            <div class="alert" id="alertBox"></div>
 
             <div class="checkout-content">
                 <!-- Checkout Form -->
@@ -276,46 +314,41 @@
                     <form id="checkoutForm">
                         <!-- Personal Information -->
                         <div class="form-section">
-                            <h3>PERSONAL INFORMATION</h3>
+                            <h3><i class="fas fa-user"></i> Personal Information</h3>
                             <div class="form-group">
-                                <label for="fullName">Full Name *</label>
-                                <input type="text" id="fullName" required>
-                                <span class="error-message">Please enter your full name</span>
+                                <label>Full Name <span class="required">*</span></label>
+                                <input type="text" id="fullName" required placeholder="Enter your full name">
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="email">Email *</label>
-                                    <input type="email" id="email" required>
-                                    <span class="error-message">Please enter a valid email</span>
+                                    <label>Email <span class="required">*</span></label>
+                                    <input type="email" id="email" required placeholder="your@email.com">
                                 </div>
                                 <div class="form-group">
-                                    <label for="phone">Phone *</label>
-                                    <input type="tel" id="phone" required pattern="[0-9]{10}">
-                                    <span class="error-message">Please enter a valid 10-digit phone number</span>
+                                    <label>Phone <span class="required">*</span></label>
+                                    <input type="tel" id="phone" required placeholder="10-digit mobile number" maxlength="10" pattern="[0-9]{10}">
                                 </div>
                             </div>
                         </div>
 
                         <!-- Shipping Address -->
                         <div class="form-section">
-                            <h3>SHIPPING ADDRESS</h3>
+                            <h3><i class="fas fa-map-marker-alt"></i> Shipping Address</h3>
                             <div class="form-group">
-                                <label for="address1">Address Line 1 *</label>
-                                <input type="text" id="address1" required>
-                                <span class="error-message">Please enter your address</span>
+                                <label>Address Line 1 <span class="required">*</span></label>
+                                <input type="text" id="address1" required placeholder="House/Flat No., Street Name">
                             </div>
                             <div class="form-group">
-                                <label for="address2">Address Line 2 (Optional)</label>
-                                <input type="text" id="address2">
+                                <label>Address Line 2</label>
+                                <input type="text" id="address2" placeholder="Landmark, Area (Optional)">
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="city">City *</label>
-                                    <input type="text" id="city" required>
-                                    <span class="error-message">Please enter your city</span>
+                                    <label>City <span class="required">*</span></label>
+                                    <input type="text" id="city" required placeholder="City">
                                 </div>
                                 <div class="form-group">
-                                    <label for="state">State *</label>
+                                    <label>State <span class="required">*</span></label>
                                     <select id="state" required>
                                         <option value="">Select State</option>
                                         <option value="Andhra Pradesh">Andhra Pradesh</option>
@@ -347,17 +380,15 @@
                                         <option value="Uttarakhand">Uttarakhand</option>
                                         <option value="West Bengal">West Bengal</option>
                                     </select>
-                                    <span class="error-message">Please select your state</span>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="pincode">Pincode *</label>
-                                    <input type="text" id="pincode" required pattern="[0-9]{6}">
-                                    <span class="error-message">Please enter a valid 6-digit pincode</span>
+                                    <label>Pincode <span class="required">*</span></label>
+                                    <input type="text" id="pincode" required placeholder="6-digit pincode" maxlength="6" pattern="[0-9]{6}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="country">Country *</label>
+                                    <label>Country</label>
                                     <input type="text" id="country" value="India" readonly>
                                 </div>
                             </div>
@@ -365,10 +396,9 @@
 
                         <!-- Additional Information -->
                         <div class="form-section">
-                            <h3>ADDITIONAL INFORMATION</h3>
+                            <h3><i class="fas fa-comment-dots"></i> Delivery Instructions (Optional)</h3>
                             <div class="form-group">
-                                <label for="instructions">Delivery Instructions (Optional)</label>
-                                <textarea id="instructions" rows="3" placeholder="Any special delivery instructions..."></textarea>
+                                <textarea id="instructions" placeholder="Any special delivery instructions..."></textarea>
                             </div>
                         </div>
                     </form>
@@ -376,29 +406,19 @@
 
                 <!-- Order Summary -->
                 <div class="order-summary">
-                    <h3>ORDER SUMMARY</h3>
+                    <h3 class="summary-header">ORDER SUMMARY</h3>
                     <div class="summary-items" id="summaryItems"></div>
-                    <div class="summary-row">
-                        <span>Subtotal:</span>
-                        <span id="subtotal">₹0</span>
-                    </div>
-                    <div class="summary-row">
-                        <span>Shipping:</span>
-                        <span style="color: #28a745; font-weight: 600;">FREE</span>
-                    </div>
-                    <div class="summary-row">
-                        <span>TOTAL:</span>
-                        <span id="total">₹0</span>
-                    </div>
-                    <button class="payment-button" id="paymentButton" onclick="handlePayment()">
-                        <span id="buttonText"><i class="fas fa-lock"></i> PAY NOW</span>
-                        <div class="loading-spinner" id="loadingSpinner">
-                            <div class="spinner"></div>
-                        </div>
+                    <div id="pricingInfo"></div>
+                    <button type="button" class="payment-button" id="paymentButton">
+                        <i class="fas fa-lock"></i> Proceed to Payment
+                        <span class="loading-spinner" id="loadingSpinner">
+                            <span class="spinner"></span>
+                        </span>
                     </button>
-                    <p class="secure-payment">
-                        <i class="fas fa-shield-alt"></i> Secure payment powered by Razorpay
-                    </p>
+                    <div class="secure-badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Secure Payment by Razorpay</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -407,123 +427,196 @@
     <!-- Razorpay SDK -->
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
+    <!-- Checkout JavaScript -->
     <script>
         // ===== CONFIGURATION =====
-        const RAZORPAY_KEY_ID = 'rzp_test_VaDlK9Jk90FAgb'; // Your Razorpay Test Key
-        const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbwJrvhyHLxjqcUFrM8yJiV-ksKJYSW8q41LL-vx9xBKrXAkFa8mGQl9SbdJrBH-ItMz/exec';
+        const RAZORPAY_KEY_ID = 'rzp_live_YeC5H9jv6p1ggB'; // Replace with your actual Razorpay Key ID
+        const BACKEND_URL = 'YOUR_GOOGLE_APPS_SCRIPT_DEPLOYMENT_URL'; // Replace with your deployed Apps Script URL
 
-        // Pricing based on quantity
+        // ===== PRICING CONFIGURATION =====
         const pricing = {
             1: { original: 1299, offer: 299, discount: 77 },
             2: { original: 2598, offer: 499, discount: 81 },
             3: { original: 3897, offer: 799, discount: 79 }
         };
 
+        // ===== LOAD CART DATA =====
         let cart = [];
-
-        // ===== LOAD CART AND DISPLAY SUMMARY =====
-        function loadCartAndSummary() {
+        
+        function loadCart() {
             const savedCart = localStorage.getItem('sorsoneCart');
             if (savedCart) {
                 cart = JSON.parse(savedCart);
             }
-
+            
             if (cart.length === 0) {
-                window.location.href = 'index.html#products';
+                window.location.href = 'add-to-cart.html';
                 return;
             }
-
+            
             displayOrderSummary();
             updateCartCount();
         }
 
+        // ===== DISPLAY ORDER SUMMARY =====
         function displayOrderSummary() {
             const summaryItems = document.getElementById('summaryItems');
-            const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const pricingInfo = document.getElementById('pricingInfo');
+            
+            // Display items
+            let itemsHTML = '';
+            cart.forEach(item => {
+                itemsHTML += `
+                    <div class="summary-item">
+                        <div class="item-image">
+                            <img src="${item.image}" alt="${item.colorName}">
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name">${item.colorName} T-Shirt</div>
+                            <div class="item-specs">Size: ${item.size} • Qty: ${item.quantity}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            summaryItems.innerHTML = itemsHTML;
             
             // Calculate pricing
+            const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const priceData = pricing[totalQuantity] || pricing[3];
+            
             const triplePacks = Math.floor(totalQuantity / 3);
             const remainder = totalQuantity % 3;
             
-            let total = triplePacks * pricing[3].offer;
-            if (remainder === 2) total += pricing[2].offer;
-            else if (remainder === 1) total += pricing[1].offer;
-
-            // Display items
-            summaryItems.innerHTML = cart.map(item => `
-                <div class="summary-item">
-                    <div class="summary-item-image">
-                        <img src="${item.image}" alt="${item.colorName}">
-                    </div>
-                    <div class="summary-item-details">
-                        <div class="summary-item-name">${item.colorName}</div>
-                        <div class="summary-item-info">Size: ${item.size} • Qty: ${item.quantity}</div>
-                    </div>
+            let total = triplePacks * 799;
+            let breakdown = '';
+            
+            if (triplePacks > 0) {
+                breakdown += `<p>• ${triplePacks} Triple Pack${triplePacks > 1 ? 's' : ''} (${triplePacks * 3} items): ₹${(triplePacks * 799).toLocaleString('en-IN')}</p>`;
+            }
+            
+            if (remainder === 2) {
+                total += 499;
+                breakdown += `<p>• Double Pack (2 items): ₹499</p>`;
+            } else if (remainder === 1) {
+                total += 299;
+                breakdown += `<p>• Single (1 item): ₹299</p>`;
+            }
+            
+            const savings = (totalQuantity * 1299) - total;
+            breakdown += `<p style="color: #28a745; font-weight: 600;">💰 You save: ₹${savings.toLocaleString('en-IN')} (${Math.round((savings / (totalQuantity * 1299)) * 100)}% OFF)</p>`;
+            
+            pricingInfo.innerHTML = `
+                <div class="pricing-breakdown">
+                    <p><strong>Pricing Breakdown:</strong></p>
+                    ${breakdown}
                 </div>
-            `).join('');
-
-            document.getElementById('subtotal').textContent = `₹${total.toLocaleString('en-IN')}`;
-            document.getElementById('total').textContent = `₹${total.toLocaleString('en-IN')}`;
+                <div class="summary-row">
+                    <span>Total Items:</span>
+                    <span>${totalQuantity}</span>
+                </div>
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span>₹${total.toLocaleString('en-IN')}</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping:</span>
+                    <span style="color: #28a745; font-weight: 600;">FREE</span>
+                </div>
+                <div class="summary-row">
+                    <span>TOTAL:</span>
+                    <span>₹${total.toLocaleString('en-IN')}</span>
+                </div>
+            `;
         }
 
+        // ===== UPDATE CART COUNT =====
         function updateCartCount() {
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
             document.getElementById('cartCount').textContent = totalItems;
         }
 
-        // ===== FORM VALIDATION =====
-        function validateForm() {
-            const form = document.getElementById('checkoutForm');
-            const inputs = form.querySelectorAll('input[required], select[required]');
-            let isValid = true;
-
-            inputs.forEach(input => {
-                const formGroup = input.closest('.form-group');
-                formGroup.classList.remove('error');
-
-                if (!input.value.trim()) {
-                    formGroup.classList.add('error');
-                    isValid = false;
-                } else if (input.type === 'email') {
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!emailRegex.test(input.value)) {
-                        formGroup.classList.add('error');
-                        isValid = false;
-                    }
-                } else if (input.id === 'phone') {
-                    if (!/^[0-9]{10}$/.test(input.value)) {
-                        formGroup.classList.add('error');
-                        isValid = false;
-                    }
-                } else if (input.id === 'pincode') {
-                    if (!/^[0-9]{6}$/.test(input.value)) {
-                        formGroup.classList.add('error');
-                        isValid = false;
-                    }
-                }
-            });
-
-            return isValid;
+        // ===== SHOW ALERT =====
+        function showAlert(message, type = 'error') {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.textContent = message;
+            alertBox.className = `alert ${type} active`;
+            
+            setTimeout(() => {
+                alertBox.classList.remove('active');
+            }, 5000);
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ===== HANDLE PAYMENT =====
-        async function handlePayment() {
+        // ===== FORM VALIDATION =====
+        function validateForm() {
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const address1 = document.getElementById('address1').value.trim();
+            const city = document.getElementById('city').value.trim();
+            const state = document.getElementById('state').value;
+            const pincode = document.getElementById('pincode').value.trim();
+
+            if (!fullName) {
+                showAlert('Please enter your full name');
+                return false;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email || !emailRegex.test(email)) {
+                showAlert('Please enter a valid email address');
+                return false;
+            }
+
+            const phoneRegex = /^[0-9]{10}$/;
+            if (!phone || !phoneRegex.test(phone)) {
+                showAlert('Please enter a valid 10-digit mobile number');
+                return false;
+            }
+
+            if (!address1) {
+                showAlert('Please enter your address');
+                return false;
+            }
+
+            if (!city) {
+                showAlert('Please enter your city');
+                return false;
+            }
+
+            if (!state) {
+                showAlert('Please select your state');
+                return false;
+            }
+
+            const pincodeRegex = /^[0-9]{6}$/;
+            if (!pincode || !pincodeRegex.test(pincode)) {
+                showAlert('Please enter a valid 6-digit pincode');
+                return false;
+            }
+
+            return true;
+        }
+
+        // ===== PROCEED TO PAYMENT =====
+        async function proceedToPayment() {
             if (!validateForm()) {
-                alert('Please fill in all required fields correctly.');
                 return;
             }
 
             const paymentButton = document.getElementById('paymentButton');
-            const buttonText = document.getElementById('buttonText');
             const loadingSpinner = document.getElementById('loadingSpinner');
 
             paymentButton.disabled = true;
-            buttonText.style.opacity = '0';
             loadingSpinner.classList.add('active');
 
             try {
                 const formData = getFormData();
                 const orderData = await createOrder(formData);
+                
+                console.log('Order created:', orderData);
                 
                 if (!orderData.success) {
                     throw new Error(orderData.error || 'Failed to create order');
@@ -533,9 +626,8 @@
 
             } catch (error) {
                 console.error('Payment error:', error);
-                alert('Payment initialization failed. Please try again. Error: ' + error.message);
+                showAlert('Payment initialization failed. Please try again. Error: ' + error.message, 'error');
                 paymentButton.disabled = false;
-                buttonText.style.opacity = '1';
                 loadingSpinner.classList.remove('active');
             }
         }
@@ -545,10 +637,9 @@
             const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
             const triplePacks = Math.floor(totalQuantity / 3);
             const remainder = totalQuantity % 3;
-            
-            let total = triplePacks * pricing[3].offer;
-            if (remainder === 2) total += pricing[2].offer;
-            else if (remainder === 1) total += pricing[1].offer;
+            let total = triplePacks * 799;
+            if (remainder === 2) total += 499;
+            else if (remainder === 1) total += 299;
 
             return {
                 fullName: document.getElementById('fullName').value.trim(),
@@ -570,6 +661,11 @@
         // ===== CREATE ORDER IN BACKEND =====
         async function createOrder(formData) {
             try {
+                const timestamp = new Date().getTime();
+                const random = Math.floor(Math.random() * 10000);
+                const orderId = `ORD-${timestamp}-${random}`;
+
+                // Try to send to backend
                 await fetch(BACKEND_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -579,10 +675,6 @@
                         ...formData
                     })
                 });
-
-                const timestamp = new Date().getTime();
-                const random = Math.floor(Math.random() * 10000);
-                const orderId = `ORD-${timestamp}-${random}`;
 
                 return {
                     success: true,
@@ -605,6 +697,8 @@
 
         // ===== INITIATE RAZORPAY PAYMENT =====
         function initiateRazorpayPayment(orderData, formData) {
+            console.log('Initiating Razorpay payment...');
+            
             const options = {
                 key: RAZORPAY_KEY_ID,
                 amount: formData.totalAmount * 100,
@@ -629,12 +723,8 @@
                 },
                 modal: {
                     ondismiss: function() {
-                        const paymentButton = document.getElementById('paymentButton');
-                        const buttonText = document.getElementById('buttonText');
-                        const loadingSpinner = document.getElementById('loadingSpinner');
-                        paymentButton.disabled = false;
-                        buttonText.style.opacity = '1';
-                        loadingSpinner.classList.remove('active');
+                        document.getElementById('paymentButton').disabled = false;
+                        document.getElementById('loadingSpinner').classList.remove('active');
                     }
                 }
             };
@@ -649,21 +739,14 @@
                 rzp.open();
                 
                 setTimeout(() => {
-                    const buttonText = document.getElementById('buttonText');
-                    const loadingSpinner = document.getElementById('loadingSpinner');
-                    buttonText.style.opacity = '1';
-                    loadingSpinner.classList.remove('active');
+                    document.getElementById('loadingSpinner').classList.remove('active');
                 }, 500);
                 
             } catch (error) {
                 console.error('Razorpay error:', error);
-                alert('Failed to open payment window. Please try again.');
-                const paymentButton = document.getElementById('paymentButton');
-                const buttonText = document.getElementById('buttonText');
-                const loadingSpinner = document.getElementById('loadingSpinner');
-                paymentButton.disabled = false;
-                buttonText.style.opacity = '1';
-                loadingSpinner.classList.remove('active');
+                showAlert('Failed to open payment window. Please try again.', 'error');
+                document.getElementById('paymentButton').disabled = false;
+                document.getElementById('loadingSpinner').classList.remove('active');
             }
         }
 
@@ -672,6 +755,7 @@
             try {
                 console.log('Payment successful:', razorpayResponse);
                 
+                // Save customer data
                 await fetch(BACKEND_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -685,6 +769,7 @@
                     })
                 });
 
+                // Save payment webhook
                 await fetch(BACKEND_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -693,49 +778,4 @@
                         action: 'payment_webhook',
                         orderId: orderData.orderId,
                         razorpay_order_id: razorpayResponse.razorpay_order_id || '',
-                        razorpay_payment_id: razorpayResponse.razorpay_payment_id || '',
-                        razorpay_signature: razorpayResponse.razorpay_signature || '',
-                        amount: formData.totalAmount,
-                        currency: 'INR',
-                        status: 'success',
-                        method: 'razorpay',
-                        email: formData.email,
-                        phone: formData.phone
-                    })
-                });
-
-                localStorage.removeItem('sorsoneCart');
-                window.location.href = `Paymentsuccess.html?order_id=${orderData.orderId}&payment_id=${razorpayResponse.razorpay_payment_id}`;
-
-            } catch (error) {
-                console.error('Error saving order:', error);
-                localStorage.removeItem('sorsoneCart');
-                window.location.href = `Paymentsuccess.html?order_id=${orderData.orderId}&payment_id=${razorpayResponse.razorpay_payment_id || 'N/A'}`;
-            }
-        }
-
-        // ===== HANDLE PAYMENT FAILURE =====
-        function handlePaymentFailure(response) {
-            const paymentButton = document.getElementById('paymentButton');
-            const buttonText = document.getElementById('buttonText');
-            const loadingSpinner = document.getElementById('loadingSpinner');
-            
-            paymentButton.disabled = false;
-            buttonText.style.opacity = '1';
-            loadingSpinner.classList.remove('active');
-
-            console.error('Payment failed:', response.error);
-            
-            let errorMessage = 'Payment failed. Please try again.';
-            if (response.error.description) {
-                errorMessage += ' Error: ' + response.error.description;
-            }
-            
-            alert(errorMessage);
-        }
-
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', loadCartAndSummary);
-    </script>
-</body>
-</html>
+                        raz
