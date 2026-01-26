@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Sorsone for inquiries, support, or feedback. We're here to help with your orders and questions about our premium oversized streetwear.">
+    <meta name="keywords" content="contact Sorsone, customer support, streetwear inquiries">
+    <title>Contact Us - Sorsone | Customer Support</title>
+    <link rel="icon" type="image/jpeg" href="images/favicon.jpg">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .contact-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 3rem;
+        }
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .contact-item {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        .contact-icon {
+            font-size: 2rem;
+            color: var(--primary-red);
+            width: 50px;
+            flex-shrink: 0;
+        }
+        .contact-details h3 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+        .contact-details p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        .contact-details a {
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: color var(--transition-base);
+        }
+        .contact-details a:hover {
+            color: var(--primary-red);
+        }
+        .contact-form {
+            background: #f9f9f9;
+            padding: 2.5rem;
+            border-radius: 8px;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-color);
+            background: white;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            transition: border-color var(--transition-base);
+            border-radius: 4px;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--dark-bg);
+        }
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        .submit-btn {
+            background: var(--dark-bg);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+            transition: all var(--transition-base);
+            border-radius: 4px;
+        }
+        .submit-btn:hover {
+            background: var(--primary-red);
+        }
+        .form-message {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 4px;
+            display: none;
+        }
+        .form-message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .form-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="index.html#products">Shop</a>
+            </div>
+            <a href="index.html" class="logo">SORSONE</a>
+            <div class="nav-right">
+                <i class="fas fa-search nav-icon" id="searchIcon"></i>
+                <i class="fas fa-user nav-icon" id="userIcon"></i>
+                <i class="fas fa-shopping-bag nav-icon" id="cartIcon"></i>
+                <i class="fas fa-bars nav-icon" id="menuIcon"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <p class="collection-label">We're Here to Help</p>
+            <h1 class="hero-title" style="font-size: 5rem; margin-bottom: 1rem;">GET IN<br>TOUCH</h1>
+            <p style="font-size: 1.1rem; color: var(--text-light); max-width: 600px; margin: 0 auto;">
+                Have questions or need assistance? Reach out to us and we'll get back to you as soon as possible.
+            </p>
+        </div>
+
+        <div class="contact-grid">
+            <!-- Contact Information -->
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>EMAIL US</h3>
+                        <p>For general inquiries and support</p>
+                        <a href="/cdn-cgi/l/email-protection#02716d70716d6c672c7667636f42656f636b6e2c616d6f"><span class="__cf_email__" data-cfemail="89fae6fbfae6e7eca7fdece8e4c9eee4e8e0e5a7eae6e4">[email&#160;protected]</span></a>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>CALL US</h3>
+                        <p>Monday - Saturday: 10 AM - 7 PM IST</p>
+                        <a href="tel:7907090396">+91 7907090396</a>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>VISIT US ONLINE</h3>
+                        <p>Explore our website</p>
+                        <a href="https://www.sorsone.com" target="_blank">www.sorsone.com</a>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>RESPONSE TIME</h3>
+                        <p>We typically respond within 24-48 hours during business days.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-form">
+                <h3 style="font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 1.5rem; letter-spacing: 1px;">SEND US A MESSAGE</h3>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Your Name *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject *</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Your Message *</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                    <div id="formMessage" class="form-message"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- FAQ Section -->
+    <section class="season-section">
+        <h2 class="section-title">FREQUENTLY ASKED QUESTIONS</h2>
+        <div style="max-width: 900px; margin: 0 auto; margin-top: 3rem;">
+            <div style="display: grid; gap: 1.5rem;">
+                <div style="padding: 1.5rem; background: #f9f9f9; border-radius: 8px; border-left: 4px solid var(--primary-red);">
+                    <h4 style="font-weight: 600; margin-bottom: 0.5rem; font-size: 1.1rem;">How long does shipping take?</h4>
+                    <p style="color: var(--text-light); line-height: 1.6;">
+                        We process orders within 1-2 business days. Delivery typically takes 5-7 business days for standard shipping across India. 
+                        For more details, visit our <a href="shipping.html" style="color: var(--primary-red);">Shipping Policy</a> page.
+                    </p>
+                </div>
+                <div style="padding: 1.5rem; background: #f9f9f9; border-radius: 8px; border-left: 4px solid var(--primary-red);">
+                    <h4 style="font-weight: 600; margin-bottom: 0.5rem; font-size: 1.1rem;">What is your return policy?</h4>
+                    <p style="color: var(--text-light); line-height: 1.6;">
+                        We offer a 7-day return policy for unused items in original condition with tags attached. 
+                        Please review our <a href="refund.html" style="color: var(--primary-red);">Return & Refund Policy</a> for complete details.
+                    </p>
+                </div>
+                <div style="padding: 1.5rem; background: #f9f9f9; border-radius: 8px; border-left: 4px solid var(--primary-red);">
+                    <h4 style="font-weight: 600; margin-bottom: 0.5rem; font-size: 1.1rem;">How can I track my order?</h4>
+                    <p style="color: var(--text-light); line-height: 1.6;">
+                        Once your order ships, you'll receive a tracking number via email. You can also contact us at 
+                        <a href="/cdn-cgi/l/email-protection#186b776a6b77767d366c7d7975587f75797174367b7775" style="color: var(--primary-red);"><span class="__cf_email__" data-cfemail="a1d2ced3d2cecfc48fd5c4c0cce1c6ccc0c8cd8fc2cecc">[email&#160;protected]</span></a> with your order number.
+                    </p>
+                </div>
+                <div style="padding: 1.5rem; background: #f9f9f9; border-radius: 8px; border-left: 4px solid var(--primary-red);">
+                    <h4 style="font-weight: 600; margin-bottom: 0.5rem; font-size: 1.1rem;">What payment methods do you accept?</h4>
+                    <p style="color: var(--text-light); line-height: 1.6;">
+                        We accept all major credit/debit cards, UPI, net banking, and digital wallets through our secure payment gateway powered by Razorpay.
+                    </p>
+                </div>
+                <div style="padding: 1.5rem; background: #f9f9f9; border-radius: 8px; border-left: 4px solid var(--primary-red);">
+                    <h4 style="font-weight: 600; margin-bottom: 0.5rem; font-size: 1.1rem;">How do I choose the right size?</h4>
+                    <p style="color: var(--text-light); line-height: 1.6;">
+                        Our oversized collection is designed for a relaxed, comfortable fit. We recommend checking the specific measurements 
+                        provided on each product page. If you're between sizes, we suggest sizing down for a more fitted oversized look.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>ABOUT SORSONE</h4>
+                <ul>
+                    <li><a href="about.html">Our Story</a></li>
+                    <li><a href="about.html#sustainability">Sustainability</a></li>
+                    <li><a href="contactus.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>CUSTOMER CARE</h4>
+                <ul>
+                    <li><a href="shipping.html">Shipping & Delivery</a></li>
+                    <li><a href="refund.html">Returns & Refunds</a></li>
+                    <li><a href="contactus.html">Track Order</a></li>
+                    <li><a href="contactus.html">FAQs</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>LEGAL</h4>
+                <ul>
+                    <li><a href="privacypolicy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms & Conditions</a></li>
+                    <li><a href="refund.html">Refund Policy</a></li>
+                    <li><a href="shipping.html">Shipping Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>CONNECT</h4>
+                <ul>
+                    <li><a href="/cdn-cgi/l/email-protection#10637f62637f7e753e6475717d50777d71797c3e737f7d"><span class="__cf_email__" data-cfemail="2b5844595844454e055f4e4a466b4c464a424705484446">[email&#160;protected]</span></a></li>
+                    <li><a href="tel:7907090396">+91 7907090396</a></li>
+                    <li><a href="https://www.sorsone.com">www.sorsone.com</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Sorsone. All rights reserved. Premium Oversized Streetwear.</p>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="script.js"></script>
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formMessage = document.getElementById('formMessage');
+            const form = this;
+            
+            // Basic validation
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const subject = document.getElementById('subject').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            if (!name || !email || !subject || !message) {
+                formMessage.textContent = 'Please fill in all required fields.';
+                formMessage.className = 'form-message error';
+                formMessage.style.display = 'block';
+                return;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                formMessage.textContent = 'Please enter a valid email address.';
+                formMessage.className = 'form-message error';
+                formMessage.style.display = 'block';
+                return;
+            }
