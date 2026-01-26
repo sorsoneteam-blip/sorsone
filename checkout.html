@@ -1,290 +1,272 @@
-// ===== CHECKOUT PAGE JAVASCRIPT - SIMPLIFIED (NO BACKEND) =====
+// ===== CONFIGURATION =====
+const RAZORPAY_KEY_ID = 'rzp_live_S7dLsK39ZbKgt2';
+const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbziQ18oMXJKdJwFwPUANb-TX0ryqd2K3b6wvfaVnt7Yf16Qp7qfVN4Nw-GqVomB9ynY6A/exec';
 
-let cart = [];
+// Pricing structure
+let pricing = {
+    1: { original: 1299, offer: 299, discount: 1000 },
+    2: { original: 2598, offer: 499, discount: 2099 },
+    3: { original: 3897, offer: 799, discount: 3098 }
+};
 
-// Load cart and initialize
-document.addEventListener('DOMContentLoaded', function() {
-    loadCart();
-    displayOrderSummary();
-    setupFormValidation();
-    setupPlaceOrderButton();
-    updateCartCount();
-});
+// ===== CREATE ORDER IN BACKEND =====
+async function createOrder(formData) {
+    try {
+        const response = await fetch(BACKEND_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                action: 'create_order',
+                ...formData
+            })
+        });
 
-function loadCart() {
-    const savedCart = localStorage.getItem('sorsoneCart');
-    if (savedCart) {
-        cart = JSON.parse(savedCart);
+        // Check if response is OK
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        
+        if (result.success) {
+            return result;
+        } else {
+            throw new Error(result.error || 'Failed to create order');
+        }
+    } catch (error) {
+        console.error('Backend error:', error);
+        
+        // Fallback: Generate order ID locally if backend fails
+        const timestamp = new Date().getTime();
+        const random = Math.floor(Math.random() * 10000);
+        const orderId = `ORD-${timestamp}-${random}`;
+
+        return {
+            success: true,
+            orderId: orderId,
+            timestamp: new Date().toISOString()
+        };
     }
+}
+
+// ===== HANDLE PAYMENT =====
+async function handlePayment() {
+    console.log('Payment button clicked');
     
-    // Redirect if cart is empty
+    if (!validateForm()) {
+        return;
+    }
+
+    const cart = JSON.parse(localStorage.getItem('sorsoneCart')) || [];
     if (cart.length === 0) {
-        alert('Your cart is empty! Please add items before checkout.');
-        window.location.href = 'index.html#products';
-    }
-}
-
-function displayOrderSummary() {
-    const orderItemsContainer = document.getElementById('orderItems');
-    const pricingBreakdown = document.getElementById('pricingBreakdown');
-    
-    // Display items
-    orderItemsContainer.innerHTML = cart.map(item => `
-        <div class="order-item">
-            <div class="order-item-image">
-                <img src="${item.image}" alt="${item.colorName}" onerror="this.src='images/placeholder.jpg'">
-            </div>
-            <div class="order-item-details">
-                <div class="order-item-name">${item.colorName} T-Shirt</div>
-                <div class="order-item-meta">Size: ${item.size} • Qty: ${item.quantity}</div>
-            </div>
-            <div class="order-item-price">₹${(item.price * item.quantity).toLocaleString('en-IN')}</div>
-        </div>
-    `).join('');
-
-    // Calculate total
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const { total, breakdown } = calculateTotal(totalItems);
-
-    // Display breakdown
-    pricingBreakdown.innerHTML = `
-        <p><strong>Pricing Breakdown:</strong></p>
-        ${breakdown}
-    `;
-
-    // Update totals
-    document.getElementById('subtotal').textContent = `₹${total.toLocaleString('en-IN')}`;
-    document.getElementById('total').textContent = `₹${total.toLocaleString('en-IN')}`;
-}
-
-function calculateTotal(totalItems) {
-    const triplePacks = Math.floor(totalItems / 3);
-    const remainder = totalItems % 3;
-    
-    let total = triplePacks * 799;
-    let breakdown = '';
-    
-    if (triplePacks > 0) {
-        breakdown += `<p>• ${triplePacks} Triple Pack${triplePacks > 1 ? 's' : ''} (${triplePacks * 3} items): ₹${(triplePacks * 799).toLocaleString('en-IN')}</p>`;
-    }
-    
-    if (remainder === 2) {
-        total += 499;
-        breakdown += `<p>• Double Pack (2 items): ₹499</p>`;
-    } else if (remainder === 1) {
-        total += 299;
-        breakdown += `<p>• Single (1 item): ₹299</p>`;
-    }
-    
-    const savings = (totalItems * 1299) - total;
-    breakdown += `<p style="color: #28a745; font-weight: 600;">💰 You save: ₹${savings.toLocaleString('en-IN')} (${Math.round((savings / (totalItems * 1299)) * 100)}% OFF)</p>`;
-    
-    return { total, breakdown };
-}
-
-function setupFormValidation() {
-    const form = document.getElementById('checkoutForm');
-    const inputs = form.querySelectorAll('input[required], select[required]');
-
-    inputs.forEach(input => {
-        input.addEventListener('blur', function() {
-            validateField(this);
-        });
-
-        input.addEventListener('input', function() {
-            if (this.parentElement.classList.contains('error')) {
-                validateField(this);
-            }
-        });
-    });
-}
-
-function validateField(field) {
-    const formGroup = field.parentElement;
-    
-    if (!field.value.trim()) {
-        formGroup.classList.add('error');
-        return false;
+        showAlert('Your cart is empty', 'error');
+        return;
     }
 
-    // Email validation
-    if (field.type === 'email') {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(field.value)) {
-            formGroup.classList.add('error');
-            return false;
-        }
-    }
+    const paymentButton = document.getElementById('paymentButton');
+    const loadingSpinner = document.getElementById('loadingSpinner');
 
-    // Phone validation
-    if (field.id === 'phone') {
-        const phoneRegex = /^[0-9]{10}$/;
-        if (!phoneRegex.test(field.value)) {
-            formGroup.classList.add('error');
-            return false;
-        }
-    }
+    paymentButton.disabled = true;
+    loadingSpinner.classList.add('active');
 
-    // PIN code validation
-    if (field.id === 'pincode') {
-        const pincodeRegex = /^[0-9]{6}$/;
-        if (!pincodeRegex.test(field.value)) {
-            formGroup.classList.add('error');
-            return false;
-        }
-    }
-
-    formGroup.classList.remove('error');
-    return true;
-}
-
-function validateForm() {
-    const form = document.getElementById('checkoutForm');
-    const inputs = form.querySelectorAll('input[required], select[required]');
-    let isValid = true;
-
-    inputs.forEach(input => {
-        if (!validateField(input)) {
-            isValid = false;
-        }
-    });
-
-    return isValid;
-}
-
-function setupPlaceOrderButton() {
-    const placeOrderBtn = document.getElementById('placeOrderBtn');
-    
-    placeOrderBtn.addEventListener('click', function() {
-        if (!validateForm()) {
-            alert('Please fill in all required fields correctly.');
-            // Scroll to first error
-            const firstError = document.querySelector('.form-group.error');
-            if (firstError) {
-                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-            return;
+    try {
+        // Get form data
+        const formData = getFormData();
+        
+        // Create order in backend
+        const orderData = await createOrder(formData);
+        
+        console.log('Order created:', orderData);
+        
+        if (!orderData.success) {
+            throw new Error(orderData.error || 'Failed to create order');
         }
 
-        initiatePayment();
-    });
+        // Initialize Razorpay payment
+        initiateRazorpayPayment(orderData, formData);
+
+    } catch (error) {
+        console.error('Payment error:', error);
+        showAlert('Payment initialization failed: ' + error.message, 'error');
+        paymentButton.disabled = false;
+        loadingSpinner.classList.remove('active');
+    }
 }
 
-function initiatePayment() {
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const { total } = calculateTotal(totalItems);
+// ===== INITIATE RAZORPAY PAYMENT =====
+function initiateRazorpayPayment(orderData, formData) {
+    console.log('Initiating Razorpay payment...');
+    
+    const totalQuantity = formData.totalItems;
+    const priceData = pricing[totalQuantity] || pricing[3];
 
-    // Get form data
-    const formData = {
-        firstName: document.getElementById('firstName').value,
-        lastName: document.getElementById('lastName').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        address1: document.getElementById('address1').value,
-        address2: document.getElementById('address2').value,
-        city: document.getElementById('city').value,
-        state: document.getElementById('state').value,
-        pincode: document.getElementById('pincode').value,
-        notes: document.getElementById('notes').value,
-        cart: cart,
-        total: total
-    };
-
-    // Generate order ID
-    const orderId = `SORS${Date.now()}`;
-
-    // Razorpay options - SIMPLIFIED (No backend required)
     const options = {
-        key: 'rzp_live_S7dLsK39ZbKgt2', // ⚠️ REPLACE WITH YOUR ACTUAL RAZORPAY KEY
-        amount: total * 100, // Amount in paise
+        key: RAZORPAY_KEY_ID,
+        amount: priceData.offer * 100, // Amount in paise
         currency: 'INR',
         name: 'SORSONE',
-        description: 'Premium Oversized T-Shirts',
+        description: `Order for ${totalQuantity} Premium T-Shirt${totalQuantity > 1 ? 's' : ''}`,
         image: 'images/favicon.jpg',
-        order_id: orderId, // Using client-side generated ID
+        handler: function(response) {
+            handlePaymentSuccess(response, orderData, formData);
+        },
         prefill: {
-            name: `${formData.firstName} ${formData.lastName}`,
+            name: formData.fullName,
             email: formData.email,
             contact: formData.phone
         },
         notes: {
-            address: `${formData.address1}, ${formData.city}, ${formData.state} - ${formData.pincode}`,
-            items: cart.length
+            order_id: orderData.orderId,
+            address: `${formData.address1}, ${formData.city}, ${formData.state}`
         },
         theme: {
             color: '#D32F2F'
         },
-        handler: function(response) {
-            handlePaymentSuccess(response, formData, orderId);
-        },
         modal: {
             ondismiss: function() {
-                console.log('Payment cancelled by user');
-                alert('Payment was cancelled. Your cart items are still saved.');
+                document.getElementById('paymentButton').disabled = false;
+                document.getElementById('loadingSpinner').classList.remove('active');
             }
         }
     };
 
     try {
-        const razorpay = new Razorpay(options);
-        razorpay.on('payment.failed', function(response) {
+        const rzp = new Razorpay(options);
+        
+        rzp.on('payment.failed', function(response) {
             handlePaymentFailure(response);
         });
-        razorpay.open();
+
+        rzp.open();
+        
+        // Hide loading spinner after modal opens
+        setTimeout(() => {
+            document.getElementById('loadingSpinner').classList.remove('active');
+        }, 500);
+        
     } catch (error) {
         console.error('Razorpay error:', error);
-        alert('Payment initialization failed. Please check your Razorpay key and try again.');
+        showAlert('Failed to open payment window. Please try again.', 'error');
+        document.getElementById('paymentButton').disabled = false;
+        document.getElementById('loadingSpinner').classList.remove('active');
     }
 }
 
-function handlePaymentSuccess(response, formData, orderId) {
-    console.log('Payment successful:', response);
-    
-    // Clear cart
-    localStorage.removeItem('sorsoneCart');
-    
-    // Store order details
-    const orderData = {
-        orderId: orderId,
-        paymentId: response.razorpay_payment_id,
-        customer: formData,
-        timestamp: new Date().toISOString(),
-        amount: formData.total
-    };
-    
-    localStorage.setItem('lastOrder', JSON.stringify(orderData));
+// ===== HANDLE PAYMENT SUCCESS =====
+async function handlePaymentSuccess(razorpayResponse, orderData, formData) {
+    try {
+        console.log('Payment successful:', razorpayResponse);
+        
+        // Save order data to backend
+        await fetch(BACKEND_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                action: 'save_customer',
+                orderId: orderData.orderId,
+                razorpayOrderId: razorpayResponse.razorpay_order_id || '',
+                razorpayPaymentId: razorpayResponse.razorpay_payment_id || '',
+                razorpaySignature: razorpayResponse.razorpay_signature || '',
+                ...formData,
+                status: 'success',
+                timestamp: new Date().toISOString()
+            })
+        });
 
-    // Redirect to success page
-    window.location.href = `Paymentsuccess.html?order_id=${orderId}&payment_id=${response.razorpay_payment_id}`;
+        // Clear cart
+        localStorage.removeItem('sorsoneCart');
+
+        // Redirect to success page
+        window.location.href = `Paymentsuccess.html?order_id=${orderData.orderId}&payment_id=${razorpayResponse.razorpay_payment_id}`;
+
+    } catch (error) {
+        console.error('Error saving order:', error);
+        // Even if saving fails, redirect to success page
+        localStorage.removeItem('sorsoneCart');
+        window.location.href = `Paymentsuccess.html?order_id=${orderData.orderId}&payment_id=${razorpayResponse.razorpay_payment_id || 'N/A'}`;
+    }
 }
 
+// ===== VALIDATE FORM =====
+function validateForm() {
+    const form = document.getElementById('checkoutForm');
+    const termsAccept = document.getElementById('termsAccept');
+
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return false;
+    }
+
+    if (!termsAccept.checked) {
+        showAlert('Please accept the Terms & Conditions', 'error');
+        return false;
+    }
+
+    return true;
+}
+
+// ===== GET FORM DATA =====
+function getFormData() {
+    const cart = JSON.parse(localStorage.getItem('sorsoneCart')) || [];
+    const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const priceData = pricing[totalQuantity] || pricing[3];
+
+    return {
+        fullName: document.getElementById('fullName').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        address1: document.getElementById('address1').value.trim(),
+        address2: document.getElementById('address2').value.trim(),
+        city: document.getElementById('city').value.trim(),
+        state: document.getElementById('state').value,
+        pincode: document.getElementById('pincode').value.trim(),
+        country: document.getElementById('country').value,
+        instructions: document.getElementById('instructions').value.trim(),
+        items: cart,
+        totalItems: totalQuantity,
+        totalAmount: priceData.offer
+    };
+}
+
+// ===== SHOW ALERT =====
+function showAlert(message, type) {
+    const formAlert = document.getElementById('formAlert');
+    formAlert.textContent = message;
+    formAlert.className = `alert ${type} active`;
+    
+    setTimeout(() => {
+        formAlert.classList.remove('active');
+    }, 5000);
+
+    formAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// ===== HANDLE PAYMENT FAILURE =====
 function handlePaymentFailure(response) {
+    const paymentButton = document.getElementById('paymentButton');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    
+    paymentButton.disabled = false;
+    loadingSpinner.classList.remove('active');
+
     console.error('Payment failed:', response.error);
     
-    let errorMessage = 'Payment failed. ';
-    if (response.error.description) {
-        errorMessage += response.error.description;
-    } else {
-        errorMessage += 'Please try again.';
+    let errorMessage = 'Payment failed. Please try again.';
+    if (response.error && response.error.description) {
+        errorMessage += ' Reason: ' + response.error.description;
     }
     
-    alert(errorMessage);
+    showAlert(errorMessage, 'error');
 }
 
-function updateCartCount() {
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const cartCountElement = document.getElementById('cartCount');
-    if (cartCountElement) {
-        cartCountElement.textContent = totalItems;
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const paymentButton = document.getElementById('paymentButton');
+    if (paymentButton) {
+        paymentButton.addEventListener('click', handlePayment);
     }
-}
-
-// Cart icon click handler
-const cartWrapper = document.querySelector('.cart-wrapper');
-if (cartWrapper) {
-    cartWrapper.addEventListener('click', function() {
-        window.location.href = 'add-to-cart.html';
-    });
-}
-
-console.log('✅ Checkout page loaded successfully');
+});
